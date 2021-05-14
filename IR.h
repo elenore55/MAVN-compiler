@@ -19,6 +19,9 @@ public:
 
 	Variable() : m_type(NO_TYPE), m_name(""), m_position(-1), m_assignment(no_assign) {}
 	Variable(std::string name, int pos) : m_type(NO_TYPE), m_name(name), m_position(pos), m_assignment(no_assign) {}
+	int pos();
+	std::string name();
+	Regs& assignment();
 
 private:
 	VariableType m_type;
@@ -43,6 +46,11 @@ public:
 	Instruction () : m_position(0), m_type(I_NO_TYPE) {}
 	Instruction (int pos, InstructionType type, Variables& dst, Variables& src) :
 		m_position(pos), m_type(type), m_dst(dst), m_src(src) {}
+
+	InstructionType type();
+
+	Variables dst();
+	Variables src();
 
 	Variables& use();
 	Variables& def();
@@ -73,5 +81,7 @@ private:
 typedef std::list<Instruction*> Instructions;
 
 bool variableExists(Variable* variable, Variables variables);
+
+Instructions& getInstructions();
 
 #endif

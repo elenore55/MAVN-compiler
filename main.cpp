@@ -3,6 +3,7 @@
 
 #include "LexicalAnalysis.h"
 #include "SyntaxAnalysis.h"
+#include "IR.h"
 
 using namespace std;
 
@@ -36,7 +37,6 @@ int main()
 
 		SyntaxAnalysis syntax(lex);
 		bool retval = syntax.Do();
-		int a = 5;
 		if (retVal)
 		{
 			cout << "Syntax analysis finished successfully!" << endl;
@@ -45,6 +45,9 @@ int main()
 		{
 			throw runtime_error("\nException! Syntax analysis failed!\n");
 		}
+
+		// Instructions& instructions = getInstructions();
+		// Variables& variables = getVariables();
 	}
 	catch (runtime_error e)
 	{

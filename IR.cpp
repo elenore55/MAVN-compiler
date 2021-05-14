@@ -30,6 +30,21 @@ std::list<Instruction*>& Instruction::pred()
     return m_pred;
 }
 
+InstructionType Instruction::type()
+{
+	return m_type;
+}
+
+Variables Instruction::dst()
+{
+	return m_dst;
+}
+
+Variables Instruction::src()
+{
+	return m_src;
+}
+
 
 bool variableExists(Variable* variable, Variables variables)
 {
@@ -47,4 +62,24 @@ bool variableExists(Variable* variable, Variables variables)
 	}
 
 	return ret;
+}
+
+Instructions& getInstructions()
+{
+	// TODO: insert return statement here
+}
+
+int Variable::pos()
+{
+	return m_position;
+}
+
+std::string Variable::name()
+{
+	return m_name;
+}
+
+Regs& Variable::assignment()
+{
+	return m_assignment;
 }
