@@ -23,13 +23,12 @@ void SyntaxAnalysis::eat(TokenType t)
 	{
 		if (currentToken.getType() == t)
 		{
-			std::cout << currentToken.getValue() << std::endl;
+			// std::cout << currentToken.getValue() << std::endl;
 			if (t != T_END_OF_FILE)
 				currentToken = getNextToken();
 		}
 		else
 		{
-			std::cout << "NE VALJA TI TOKEN " << std::endl;
 			printSyntaxError(currentToken);
 			errorFound = true;
 		}

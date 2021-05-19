@@ -30,17 +30,42 @@ std::list<Instruction*>& Instruction::pred()
     return m_pred;
 }
 
-InstructionType Instruction::type()
+void Instruction::addPred(Instruction* instr)
+{
+	m_pred.push_back(instr);
+}
+
+void Instruction::addSucc(Instruction* instr)
+{
+	m_succ.push_back(instr);
+}
+
+int& Instruction::pos()
+{
+	return m_position;
+}
+
+InstructionType& Instruction::type()
 {
 	return m_type;
 }
 
-Variables Instruction::dst()
+std::string& Instruction::instructionString()
+{
+	return m_instructionString;
+}
+
+std::string& Instruction::label()
+{
+	return m_label;
+}
+
+Variables& Instruction::dst()
 {
 	return m_dst;
 }
 
-Variables Instruction::src()
+Variables& Instruction::src()
 {
 	return m_src;
 }
@@ -67,14 +92,15 @@ bool variableExists(Variable* variable, Variables variables)
 Instructions& getInstructions()
 {
 	// TODO: insert return statement here
+	return Instructions();
 }
 
-int Variable::pos()
+int& Variable::pos()
 {
 	return m_position;
 }
 
-std::string Variable::name()
+std::string& Variable::name()
 {
 	return m_name;
 }
@@ -82,4 +108,14 @@ std::string Variable::name()
 Regs& Variable::assignment()
 {
 	return m_assignment;
+}
+
+Variable::VariableType& Variable::type()
+{
+	return m_type;
+}
+
+int& Variable::value()
+{
+	return m_value;
 }

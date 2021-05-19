@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClInclude Include="Constants.h" />
     <ClInclude Include="FiniteStateMachine.h" />
+    <ClInclude Include="InstructionGenerator.h" />
     <ClInclude Include="InterferenceGraph.h" />
     <ClInclude Include="IR.h" />
     <ClInclude Include="LexicalAnalysis.h" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="InstructionGenerator.cpp" />
     <ClCompile Include="InterferenceGraph.cpp" />
     <ClCompile Include="IR.cpp" />
     <ClCompile Include="LexicalAnalysis.cpp" />
@@ -99,6 +101,7 @@
     <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\examples\multiply.mavn" />
     <None Include="..\examples\simple.mavn" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

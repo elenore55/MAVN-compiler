@@ -1,4 +1,4 @@
-﻿  IR.cpp
-  LivelinessAnalysis.cpp
-  Generating Code...
+﻿  InstructionGenerator.cpp
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(204,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(221,21): warning C4018: '<': signed/unsigned mismatch
   LexicalAnalysis.vcxproj -> C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\Debug\LexicalAnalysis.exe

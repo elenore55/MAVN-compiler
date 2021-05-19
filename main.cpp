@@ -4,6 +4,7 @@
 #include "LexicalAnalysis.h"
 #include "SyntaxAnalysis.h"
 #include "IR.h"
+#include "InstructionGenerator.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ int main()
 {
 	try
 	{
-		std::string fileName = ".\\..\\examples\\simple.mavn";
+		std::string fileName = ".\\..\\examples\\multiply.mavn";
 		bool retVal = false;
 
 		LexicalAnalysis lex;
@@ -45,9 +46,12 @@ int main()
 		{
 			throw runtime_error("\nException! Syntax analysis failed!\n");
 		}
+		InstructionGenerator gen(lex.getTokenList());
+		Variables* vars = gen.getVariables();
+		Instructions* instructions = gen.getInstructions();
+		for (Instruction* ins : (*instructions))
+			std::cout << ins << endl;
 
-		// Instructions& instructions = getInstructions();
-		// Variables& variables = getVariables();
 	}
 	catch (runtime_error e)
 	{
