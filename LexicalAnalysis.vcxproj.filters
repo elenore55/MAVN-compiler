@@ -48,6 +48,12 @@
     <ClInclude Include="InstructionGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Simplification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FiniteStateMachine.cpp">
@@ -80,12 +86,24 @@
     <ClCompile Include="InstructionGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Simplification.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\examples\simple.mavn">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\examples\multiply.mavn">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\examples\multiply.s">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\examples\simple.s">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

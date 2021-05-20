@@ -5,15 +5,20 @@
 #include "SyntaxAnalysis.h"
 #include "IR.h"
 #include "InstructionGenerator.h"
+#include "LivelinessAnalysis.h"
+#include "InstructionGenerator.h"
+#include "ResourceAllocation.h"
+#include "Simplification.h"
+#include "FileWriter.h"
 
 using namespace std;
-
 
 int main()
 {
 	try
 	{
-		std::string fileName = ".\\..\\examples\\multiply.mavn";
+		std::string fileName = ".\\..\\examples\\simple.mavn";
+		std::string outFileName = ".\\..\\examples\\simple.s";
 		bool retVal = false;
 
 		LexicalAnalysis lex;
@@ -51,7 +56,35 @@ int main()
 		Instructions* instructions = gen.getInstructions();
 		for (Instruction* ins : (*instructions))
 			std::cout << ins << endl;
+		livenessAnalysis(instructions);
 
+		InterferenceGraph* ig;
+		stack<Variable*>* simplificationStack;
+
+		ig = doInterferenceGraph(instructions);
+		ig->size = ig->variables->size();
+		printInterferenceGraph(ig);
+
+		simplificationStack = doSimplification(ig, __REG_NUMBER__);
+		if (simplificationStack == NULL)
+		{
+			cout << "Spill detected!\n";
+		}
+		else
+		{
+			printSimplificationStack(simplificationStack);
+			doResourceAllocation(simplificationStack, ig);
+			if (checkResourceAllocation(ig))
+				std::cout << "yay\n";
+			else
+				std::cout << "no\n";
+		}
+
+		Labels labels = gen.getLabels();
+		Functions functions = gen.getFunctions();
+
+		FileWriter writer(outFileName);
+		writer.writeToSFile(instructions, vars, labels, functions);
 	}
 	catch (runtime_error e)
 	{

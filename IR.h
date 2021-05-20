@@ -3,7 +3,10 @@
 
 #include <iostream>
 #include "Types.h"
+#include <map>
 
+using Labels = std::map<std::string, int>;
+using Functions = std::map<std::string, int>;
 
 /**
  * This class represents one variable from program code.
@@ -100,6 +103,8 @@ public:
 			os << i->instructionString() << "\n";
 		return os; 
 	}
+	void formInstructionString();
+	void updateInstructionString();
 
 private:
 	int m_position;
@@ -116,6 +121,7 @@ private:
 	Variables m_out;
 	std::list<Instruction*> m_succ;
 	std::list<Instruction*> m_pred;
+
 };
 
 

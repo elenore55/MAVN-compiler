@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="FileWriter.h" />
     <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="InstructionGenerator.h" />
     <ClInclude Include="InterferenceGraph.h" />
@@ -84,11 +85,13 @@
     <ClInclude Include="LexicalAnalysis.h" />
     <ClInclude Include="LivelinessAnalysis.h" />
     <ClInclude Include="ResourceAllocation.h" />
+    <ClInclude Include="Simplification.h" />
     <ClInclude Include="SyntaxAnalysis.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FileWriter.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="InstructionGenerator.cpp" />
     <ClCompile Include="InterferenceGraph.cpp" />
@@ -97,12 +100,15 @@
     <ClCompile Include="LivelinessAnalysis.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceAllocation.cpp" />
+    <ClCompile Include="Simplification.cpp" />
     <ClCompile Include="SyntaxAnalysis.cpp" />
     <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\examples\multiply.mavn" />
+    <None Include="..\examples\multiply.s" />
     <None Include="..\examples\simple.mavn" />
+    <None Include="..\examples\simple.s" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,13 +10,18 @@ public:
 	InstructionGenerator(TokenList tokenList);
 	Instructions* getInstructions();
 	Variables* getVariables();
+	Labels getLabels();
+	Functions getFunctions();
 	
 private:
 	TokenList m_tokenList;
+	Instructions* m_instructions;
 	std::map<std::string, Variable*> m_variablesMap;
-	std::map<std::string, int> m_lablesMap;
-	std::map<std::string, int> m_functionsMap;
+	Labels m_lablesMap;
+	Functions m_functionsMap;
 	std::map<int, Instruction*> m_instructionsMap;
 
-	void determinePredAndSucc(Instructions* instructions);
+	void generateInstructions();
+	void determinePredAndSucc();
+	void generateInstructionString(Instruction* instr, std::string name, Variable* dst, Variable* src1, Variable* src2);
 };

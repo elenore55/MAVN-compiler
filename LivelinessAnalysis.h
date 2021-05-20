@@ -2,4 +2,4 @@
 
 #include "IR.h"
 
-void livenessAnalysis(Instructions instructions);
+void livenessAnalysis(Instructions* instructions);

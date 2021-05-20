@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include "IR.h"
 
 /**
@@ -9,7 +10,7 @@
 typedef struct
 {
 	Variables* variables;	///< all variables from instructions
-	char** values;			///< matrix value
+	std::vector<std::vector<int>> values;			///< matrix value
 	int size;				///< size of square matrix
 } InterferenceGraph;
 

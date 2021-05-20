@@ -28,10 +28,12 @@ const int __INTERFERENCE__ = 1;
  */
 const int __EMPTY__ = 0;
 
+const int __REMOVED__ = -1;
+
 /**
  * Number of regs in processor.
  */
-const int __REG_NUMBER__ = 4;
+const int __REG_NUMBER__ = 5;
 
 /**
  * Use these to print liveness analysis dump.

@@ -13,6 +13,8 @@
 bool doResourceAllocation(std::stack<Variable*>* simplificationStack, InterferenceGraph* ig);
 
 
+bool checkResourceAllocation(InterferenceGraph* ig);
+
 /**
  * Use this function remove unnecessary move instruction from graph flow.
  * @param instrs list of instructions

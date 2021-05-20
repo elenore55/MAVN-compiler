@@ -15,7 +15,7 @@ bool doResourceAllocation(std::stack<Variable*>* simplificationStack, Interferen
 			}
 		}
 
-		for (int r = 0; r < __REG_NUMBER__; r++) {
+		for (int r = 1; r <= __REG_NUMBER__; r++) {
 			if (usedColors.find(r) == usedColors.end()) {
 				v->assignment() = (Regs)r;
 				break;
@@ -23,6 +23,23 @@ bool doResourceAllocation(std::stack<Variable*>* simplificationStack, Interferen
 		}
 		simplificationStack->pop();
 	}
+	return true;
+}
+
+bool checkResourceAllocation(InterferenceGraph* ig)
+{
+	std::set<int> colors;
+	for (Variables::iterator it1 = ig->variables->begin(); it1 != ig->variables->end(); it1++) {
+		for (Variables::iterator it2 = it1; it2 != ig->variables->end(); it2++) {
+			if (*it2 == *it1) continue;
+			Variable* v = *it1;
+			Variable* u = *it2;
+			if (ig->values[v->pos()][u->pos()] == 1 && v->assignment() == u->assignment()) return false;
+			colors.insert(v->assignment());
+			colors.insert(u->assignment());
+		}
+	}
+	if (colors.size() > __REG_NUMBER__) return false;
 	return true;
 }
 

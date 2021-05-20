@@ -1,4 +1,18 @@
-﻿  InstructionGenerator.cpp
-C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(204,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(221,21): warning C4018: '<': signed/unsigned mismatch
+﻿  FileWriter.cpp
+  FiniteStateMachine.cpp
+  IR.cpp
+  InstructionGenerator.cpp
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(228,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(245,21): warning C4018: '<': signed/unsigned mismatch
+  InterferenceGraph.cpp
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InterferenceGraph.cpp(17,11): warning C4552: '-': result of expression not used
+  LexicalAnalysis.cpp
+  LivelinessAnalysis.cpp
+  ResourceAllocation.cpp
+  Simplification.cpp
+  SyntaxAnalysis.cpp
+  Token.cpp
+  main.cpp
+  Generating Code...
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\IR.cpp(121): warning C4172: returning address of local variable or temporary
   LexicalAnalysis.vcxproj -> C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\Debug\LexicalAnalysis.exe
