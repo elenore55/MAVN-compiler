@@ -50,13 +50,13 @@ void Instruction::updateInstructionString()
 {
 	if (m_def.size() > 0)
 	{
-		std::string destReg = "t" + std::to_string((*(m_def.begin()))->assignment() - 1);
+		std::string destReg = "$t" + std::to_string((*(m_def.begin()))->assignment() - 1);
 		auto destPos = m_instructionString.find("`d");
 		m_instructionString.replace(destPos, 2, destReg);
 	}
 	if (m_use.size() > 0)
 	{
-		std::string srcReg1 = "t" + std::to_string((*(m_use.begin()))->assignment() - 1);
+		std::string srcReg1 = "$t" + std::to_string((*(m_use.begin()))->assignment() - 1);
 		auto src1Pos = m_instructionString.find("`s");
 		m_instructionString.replace(src1Pos, 2, srcReg1);
 	}
@@ -64,7 +64,7 @@ void Instruction::updateInstructionString()
 	{
 		auto it = m_use.begin();
 		it++;
-		std::string srcReg2 = "t" + std::to_string((*it)->assignment() - 1);
+		std::string srcReg2 = "$t" + std::to_string((*it)->assignment() - 1);
 		auto src2Pos = m_instructionString.rfind("`s");
 		m_instructionString.replace(src2Pos, 2, srcReg2);
 	}

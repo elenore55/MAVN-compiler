@@ -166,6 +166,31 @@ void SyntaxAnalysis::E()
 		eat(T_COMMA);
 		eat(T_ID);
 	}
+	else if (currentToken.getType() == T_ABS)
+	{
+		eat(T_ABS);
+		eat(T_R_ID);
+		eat(T_COMMA);
+		eat(T_R_ID);
+	}
+	else if (currentToken.getType() == T_NOR)
+	{
+		eat(T_NOR);
+		eat(T_R_ID);
+		eat(T_COMMA);
+		eat(T_R_ID);
+		eat(T_COMMA);
+		eat(T_R_ID);
+	}
+	else if (currentToken.getType() == T_SEQ)
+	{
+		eat(T_SEQ);
+		eat(T_R_ID);
+		eat(T_COMMA);
+		eat(T_R_ID);
+		eat(T_COMMA);
+		eat(T_R_ID);
+	}
 	else
 	{
 		eat(T_NOP);

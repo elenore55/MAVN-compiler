@@ -14,7 +14,7 @@ InterferenceGraph* doInterferenceGraph(Instructions* instructions)
 	for (std::map<std::string, Variable*>::iterator it = var_map.begin(); it != var_map.end(); it++)
 		ig->variables->push_back(it->second);
 	int size = ig->variables->size();
-	ig->size - size;
+	ig->size = size;
 	ig->values.resize(size);
 	for (int i = 0; i < size; i++)
 		ig->values[i].resize(size);

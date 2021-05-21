@@ -101,6 +101,9 @@ string Token::tokenTypeToString(TokenType t)
 		case T_COMMENT:			return "[T_COMMENT]";
 		case T_END_OF_FILE:		return "[T_END_OF_FILE]";
 		case T_ERROR:			return "[T_ERROR]";
+		case T_ABS:				return "[T_ABS]";
+		case T_NOR:				return "[T_NOR]";
+		case T_SEQ:				return "[T_SEQ]";
 		default:				return "";
 	}
 }

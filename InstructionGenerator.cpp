@@ -100,6 +100,40 @@ void InstructionGenerator::generateInstructions()
 			m_instructionsMap[instrCount] = instr;
 			break;
 		}
+		case T_NOR:
+		{
+			std::string dstName = (++it)->getValue();
+			it++;
+			std::string srcName1 = (++it)->getValue();
+			it++;
+			std::string srcName2 = (++it)->getValue();
+			Variables dstVars = { m_variablesMap[dstName] };
+			Variables srcVars = { m_variablesMap[srcName1], m_variablesMap[srcName2] };
+			Instruction* instr = new Instruction(++instrCount, I_NOR, dstVars, srcVars);
+			std::string s1 = m_variablesMap[srcName1]->type() == Variable::MEM_VAR ? srcName1 : "`s";
+			std::string s2 = m_variablesMap[srcName2]->type() == Variable::MEM_VAR ? srcName2 : "`s";
+			instr->instructionString() = "nor `d, " + s1 + ", " + s2 + ";";
+			m_instructions->push_back(instr);
+			m_instructionsMap[instrCount] = instr;
+			break;
+		}
+		case T_SEQ:
+		{
+			std::string dstName = (++it)->getValue();
+			it++;
+			std::string srcName1 = (++it)->getValue();
+			it++;
+			std::string srcName2 = (++it)->getValue();
+			Variables dstVars = { m_variablesMap[dstName] };
+			Variables srcVars = { m_variablesMap[srcName1], m_variablesMap[srcName2] };
+			Instruction* instr = new Instruction(++instrCount, I_SEQ, dstVars, srcVars);
+			std::string s1 = m_variablesMap[srcName1]->type() == Variable::MEM_VAR ? srcName1 : "`s";
+			std::string s2 = m_variablesMap[srcName2]->type() == Variable::MEM_VAR ? srcName2 : "`s";
+			instr->instructionString() = "seq `d, " + s1 + ", " + s2 + ";";
+			m_instructions->push_back(instr);
+			m_instructionsMap[instrCount] = instr;
+			break;
+		}
 		case T_ADDI:
 		{
 			std::string dstName = (++it)->getValue();
@@ -161,6 +195,20 @@ void InstructionGenerator::generateInstructions()
 			m_instructionsMap[instrCount] = instr;
 			break;
 		}
+		case T_ABS:
+		{
+			std::string dstName = (++it)->getValue();
+			it++;
+			std::string srcName = (++it)->getValue();
+			Variables dstVars = { m_variablesMap[dstName] };
+			Variables srcVars = { m_variablesMap[srcName] };
+			Instruction* instr = new Instruction(++instrCount, I_ABS, dstVars, srcVars);
+			std::string s = m_variablesMap[srcName]->type() == Variable::MEM_VAR ? srcName : "`s";
+			instr->instructionString() = "abs `d, " + s + ";";
+			m_instructions->push_back(instr);
+			m_instructionsMap[instrCount] = instr;
+			break;
+		}
 		case T_LI:
 		{
 			std::string dstName = (++it)->getValue();
@@ -174,11 +222,11 @@ void InstructionGenerator::generateInstructions()
 		}
 		case T_BLTZ:
 		{
-			std::string dstName = (++it)->getValue();
+			std::string srcName = (++it)->getValue();
 			it++;
-			Variables dstVars = { m_variablesMap[dstName] };
-			Instruction* instr = new Instruction(++instrCount, I_BLTZ, dstVars, Variables());
-			instr->instructionString() = "btlz `d, " + (++it)->getValue() + ";";
+			Variables srcVars = { m_variablesMap[srcName] };
+			Instruction* instr = new Instruction(++instrCount, I_BLTZ, Variables(), srcVars);
+			instr->instructionString() = "btlz `s, " + (++it)->getValue() + ";";
 			instr->label() = it->getValue();
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
