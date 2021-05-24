@@ -21,10 +21,8 @@ Variables* InstructionGenerator::getVariables()
 		{
 			Variable* v = new Variable();
 			v->type() = Variable::MEM_VAR;
-			it++;
-			v->name() = it->getValue();
-			it++;
-			v->value() = stoi(it->getValue());
+			v->name() = (++it)->getValue();
+			v->value() = stoi((++it)->getValue());
 			m_variablesMap[v->name()] = v;
 			variables->push_back(v);
 			break;
@@ -33,8 +31,7 @@ Variables* InstructionGenerator::getVariables()
 		{
 			Variable* v = new Variable();
 			v->type() = Variable::REG_VAR;
-			it++;
-			v->name() = it->getValue();
+			v->name() = (++it)->getValue();
 			m_variablesMap[v->name()] = v;
 			v->pos() = ++varCount;
 			variables->push_back(v);
@@ -76,9 +73,7 @@ void InstructionGenerator::generateInstructions()
 			Variables dstVars = { m_variablesMap[dstName] };
 			Variables srcVars = { m_variablesMap[srcName1], m_variablesMap[srcName2] };
 			Instruction* instr = new Instruction(++instrCount, I_ADD, dstVars, srcVars);
-			std::string s1 = m_variablesMap[srcName1]->type() == Variable::MEM_VAR ? srcName1 : "`s";
-			std::string s2 = m_variablesMap[srcName2]->type() == Variable::MEM_VAR ? srcName2 : "`s";
-			instr->instructionString() = "add `d, " + s1 + ", " + s2 + ";";
+			instr->instructionString() = "add `d, `s, `s;";
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
 			break;
@@ -93,9 +88,7 @@ void InstructionGenerator::generateInstructions()
 			Variables dstVars = { m_variablesMap[dstName] };
 			Variables srcVars = { m_variablesMap[srcName1], m_variablesMap[srcName2] };
 			Instruction* instr = new Instruction(++instrCount, I_SUB, dstVars, srcVars);
-			std::string s1 = m_variablesMap[srcName1]->type() == Variable::MEM_VAR ? srcName1 : "`s";
-			std::string s2 = m_variablesMap[srcName2]->type() == Variable::MEM_VAR ? srcName2 : "`s";
-			instr->instructionString() = "sub `d, " + s1 + ", " + s2 + ";";
+			instr->instructionString() = "sub `d, `s, `s;";
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
 			break;
@@ -110,9 +103,7 @@ void InstructionGenerator::generateInstructions()
 			Variables dstVars = { m_variablesMap[dstName] };
 			Variables srcVars = { m_variablesMap[srcName1], m_variablesMap[srcName2] };
 			Instruction* instr = new Instruction(++instrCount, I_NOR, dstVars, srcVars);
-			std::string s1 = m_variablesMap[srcName1]->type() == Variable::MEM_VAR ? srcName1 : "`s";
-			std::string s2 = m_variablesMap[srcName2]->type() == Variable::MEM_VAR ? srcName2 : "`s";
-			instr->instructionString() = "nor `d, " + s1 + ", " + s2 + ";";
+			instr->instructionString() = "nor `d, `s, `s;";
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
 			break;
@@ -127,9 +118,7 @@ void InstructionGenerator::generateInstructions()
 			Variables dstVars = { m_variablesMap[dstName] };
 			Variables srcVars = { m_variablesMap[srcName1], m_variablesMap[srcName2] };
 			Instruction* instr = new Instruction(++instrCount, I_SEQ, dstVars, srcVars);
-			std::string s1 = m_variablesMap[srcName1]->type() == Variable::MEM_VAR ? srcName1 : "`s";
-			std::string s2 = m_variablesMap[srcName2]->type() == Variable::MEM_VAR ? srcName2 : "`s";
-			instr->instructionString() = "seq `d, " + s1 + ", " + s2 + ";";
+			instr->instructionString() = "seq `d, `s, `s;";
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
 			break;
@@ -143,8 +132,7 @@ void InstructionGenerator::generateInstructions()
 			Variables dstVars = { m_variablesMap[dstName] };
 			Variables srcVars = { m_variablesMap[srcName] };
 			Instruction* instr = new Instruction(++instrCount, I_ADDI, dstVars, srcVars);
-			std::string s = m_variablesMap[srcName]->type() == Variable::MEM_VAR ? srcName : "`s";
-			instr->instructionString() = "addi `d, " + s + ", " + (++it)->getValue() + ";";
+			instr->instructionString() = "addi `d, `s, " + (++it)->getValue() + ";";
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
 			break;
@@ -203,8 +191,7 @@ void InstructionGenerator::generateInstructions()
 			Variables dstVars = { m_variablesMap[dstName] };
 			Variables srcVars = { m_variablesMap[srcName] };
 			Instruction* instr = new Instruction(++instrCount, I_ABS, dstVars, srcVars);
-			std::string s = m_variablesMap[srcName]->type() == Variable::MEM_VAR ? srcName : "`s";
-			instr->instructionString() = "abs `d, " + s + ";";
+			instr->instructionString() = "abs `d, `s;";
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
 			break;
@@ -299,7 +286,3 @@ void InstructionGenerator::determinePredAndSucc()
 	}
 }
 
-void InstructionGenerator::generateInstructionString(Instruction* instr, std::string name, Variable* dst, Variable* src1, Variable* src2)
-{
-	Variables dstVars;
-}

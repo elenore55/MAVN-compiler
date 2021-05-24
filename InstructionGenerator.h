@@ -12,7 +12,7 @@ public:
 	Variables* getVariables();
 	Labels getLabels();
 	Functions getFunctions();
-	
+
 private:
 	TokenList m_tokenList;
 	Instructions* m_instructions;
@@ -23,5 +23,4 @@ private:
 
 	void generateInstructions();
 	void determinePredAndSucc();
-	void generateInstructionString(Instruction* instr, std::string name, Variable* dst, Variable* src1, Variable* src2);
 };

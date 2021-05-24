@@ -17,74 +17,90 @@ int main()
 {
 	try
 	{
-		std::string fileName = ".\\..\\examples\\simple.mavn";
-		std::string outFileName = ".\\..\\examples\\simple.s";
-		bool retVal = false;
+		std::string fileName = ".\\..\\examples\\multiply.mavn";
+		std::string outFileName = ".\\..\\examples\\multiply.s";
 
+		/**
+		* Lexical Analysis.
+		*/
 		LexicalAnalysis lex;
-
 		if (!lex.readInputFile(fileName))
 			throw runtime_error("\nException! Failed to open input file!\n");
-
 		lex.initialize();
-
-		retVal = lex.Do();
-
-		if (retVal)
-		{
-			cout << "Lexical analysis finished successfully!" << endl;
-			lex.printTokens();
-		}
-		else
+		if (!lex.Do())
 		{
 			lex.printLexError();
 			throw runtime_error("\nException! Lexical analysis failed!\n");
 		}
+		cout << "Lexical analysis finished successfully!" << endl;
+		lex.printTokens();
 
-		SyntaxAnalysis syntax(lex);
-		bool retval = syntax.Do();
-		if (retVal)
-		{
-			cout << "Syntax analysis finished successfully!" << endl;
-		}
-		else
+		/**
+		* Syntax Analysis.
+		*/
+		SyntaxAnalysis syntaxAnalysis(lex);
+		if (!syntaxAnalysis.Do())
 		{
 			throw runtime_error("\nException! Syntax analysis failed!\n");
 		}
+		cout << "Syntax analysis finished successfully!" << endl;
+
+		/**
+		* Instruction Generation.
+		*/
 		InstructionGenerator gen(lex.getTokenList());
 		Variables* vars = gen.getVariables();
 		Instructions* instructions = gen.getInstructions();
 		for (Instruction* ins : (*instructions))
+		{
 			std::cout << ins << endl;
-		livenessAnalysis(instructions);
+		}
 
+		/**
+		* Liveliness Analysis.
+		*/
+		LivelinessAnalysis livelinessAnalysis(instructions);
+		livelinessAnalysis.Do();
+
+		/**
+		* Interference Graph.
+		*/
 		InterferenceGraph* ig;
-		stack<Variable*>* simplificationStack;
-
 		ig = doInterferenceGraph(instructions);
 		ig->size = ig->variables->size();
 		printInterferenceGraph(ig);
 
+		/**
+		* Simplification Stack.
+		*/
+		stack<Variable*>* simplificationStack;
 		simplificationStack = doSimplification(ig, __REG_NUMBER__);
 		if (simplificationStack == NULL)
 		{
-			cout << "Spill detected!\n";
+			throw runtime_error("Spill detected!");
 		}
-		else
-		{
-			printSimplificationStack(simplificationStack);
-			doResourceAllocation(simplificationStack, ig);
-			if (checkResourceAllocation(ig))
-				std::cout << "yay\n";
-			else
-				std::cout << "no\n";
-		}
+		printSimplificationStack(simplificationStack);
 
+		/**
+		* Resource Analysis.
+		*/
+		ResourceAllocation resourceAllocation(simplificationStack, ig);
+		resourceAllocation.Do();
+		if (!resourceAllocation.check())
+		{
+			throw runtime_error("Resource Allocation failed!");
+		}
+		std::cout << "Resource Allocation successful!\n";
+		
+		/**
+		* Generating File.
+		*/
 		Labels labels = gen.getLabels();
 		Functions functions = gen.getFunctions();
-
 		FileWriter writer(outFileName);
 		writer.writeToSFile(instructions, vars, labels, functions);
+
+		freeInterferenceGraph(ig);
 	}
 	catch (runtime_error e)
 	{

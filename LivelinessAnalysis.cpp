@@ -1,18 +1,11 @@
 #include "LivelinessAnalysis.h"
 #include <vector>
 
-bool done(Instructions* instructions, const std::vector<Variables>& in_prims, const std::vector<Variables>& out_prims) {
-	int i = 0;
-	for (Instruction* instr : *instructions) {
-		if (instr->in() != in_prims[i] || instr->out() != out_prims[i]) return false;
-		i++;
-	}
-	return true;
-}
+LivelinessAnalysis::LivelinessAnalysis(Instructions* instructions) : m_instructions(instructions) {}
 
-void livenessAnalysis(Instructions* instructions)
+void LivelinessAnalysis::Do()
 {
-	for (Instructions::reverse_iterator it = instructions->rbegin(); it != instructions->rend(); it++) {
+	for (Instructions::reverse_iterator it = m_instructions->rbegin(); it != m_instructions->rend(); it++) {
 		Instruction* instr = *it;
 		instr->in().clear();
 		instr->out().clear();
@@ -31,10 +24,10 @@ void livenessAnalysis(Instructions* instructions)
 	}
 
 	while (true) {
-		std::vector<Variables> in_prims(instructions->size());
-		std::vector<Variables> out_prims(instructions->size());
-		int i = instructions->size() - 1;
-		for (Instructions::reverse_iterator it = instructions->rbegin(); it != instructions->rend(); it++, i--) {
+		std::vector<Variables> in_prims(m_instructions->size());
+		std::vector<Variables> out_prims(m_instructions->size());
+		int i = m_instructions->size() - 1;
+		for (Instructions::reverse_iterator it = m_instructions->rbegin(); it != m_instructions->rend(); it++, i--) {
 			Instruction* instr = *it;
 			in_prims[i] = instr->in();
 			out_prims[i] = instr->out();
@@ -52,6 +45,16 @@ void livenessAnalysis(Instructions* instructions)
 			instr->in().sort();
 			instr->in().unique();
 		}
-		if (done(instructions, in_prims, out_prims)) break;
+		if (done(in_prims, out_prims)) break;
 	}
+}
+
+bool LivelinessAnalysis::done(const std::vector<Variables>& in_prims, const std::vector<Variables>& out_prims)
+{
+	int i = 0;
+	for (Instruction* instr : *m_instructions) {
+		if (instr->in() != in_prims[i] || instr->out() != out_prims[i]) return false;
+		i++;
+	}
+	return true;
 }

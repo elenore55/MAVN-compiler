@@ -97,6 +97,31 @@ Variables& Instruction::src()
 }
 
 
+std::ostream& operator<<(std::ostream& os, Variable* var)
+{
+	os << "NAME: " << var->m_name << "  TYPE: " << var->m_type << "  POS: " << var->m_position;
+	return os;
+}
+
+std::ostream& operator<<(std::ostream& os, Instruction* instr)
+{
+	//os << "TYPE: " << instr->m_type << "  POS: " << instr->m_position << "\n";
+	//os << "DST:\n";
+	//for (Variable* var : instr->m_dst)
+	//	os << var << "\n";
+	//os << "SRC:\n";
+	//for (Variable* var : instr->m_src)
+	//	os << var << "\n";
+	os << instr->m_instructionString << "\n";
+	os << "PRED:\n";
+	for (Instruction* i : instr->m_pred)
+		os << i->instructionString() << "\n";
+	os << "SUCC:\n";
+	for (Instruction* i : instr->m_succ)
+		os << i->instructionString() << "\n";
+	return os;
+}
+
 bool variableExists(Variable* variable, Variables variables)
 {
 	bool ret = false;
@@ -113,12 +138,6 @@ bool variableExists(Variable* variable, Variables variables)
 	}
 
 	return ret;
-}
-
-Instructions& getInstructions()
-{
-	// TODO: insert return statement here
-	return Instructions();
 }
 
 int& Variable::pos()

@@ -23,17 +23,14 @@ public:
 
 	Variable() : m_type(NO_TYPE), m_name(""), m_position(-1), m_assignment(no_assign), m_value(0) {}
 	Variable(std::string name, int pos) : m_type(NO_TYPE), m_name(name), m_position(pos), m_assignment(no_assign), m_value(0) {}
+
 	int& pos();
 	std::string& name();
 	Regs& assignment();
 	VariableType& type();
 	int& value();
 
-	friend std::ostream& operator<< (std::ostream& os, Variable* var)
-	{
-		os << "NAME: " << var->m_name << "  TYPE: " << var->m_type << "  POS: " << var->m_position;
-		return os;
-	}
+	friend std::ostream& operator<< (std::ostream& os, Variable* var);
 
 private:
 	VariableType m_type;
@@ -85,25 +82,8 @@ public:
 
 	int& pos();
 
-	friend std::ostream& operator<< (std::ostream& os, Instruction* instr)
-	{
-		//os << "TYPE: " << instr->m_type << "  POS: " << instr->m_position << "\n";
-		//os << "DST:\n";
-		//for (Variable* var : instr->m_dst)
-		//	os << var << "\n";
-		//os << "SRC:\n";
-		//for (Variable* var : instr->m_src)
-		//	os << var << "\n";
-		os << instr->m_instructionString << "\n";
-		os << "PRED:\n";
-		for (Instruction* i : instr->m_pred)
-			os << i->instructionString() << "\n";
-		os << "SUCC:\n";
-		for (Instruction* i : instr->m_succ)
-			os << i->instructionString() << "\n";
-		return os; 
-	}
-	void formInstructionString();
+	friend std::ostream& operator<< (std::ostream& os, Instruction* instr);
+
 	void updateInstructionString();
 
 private:
@@ -119,6 +99,7 @@ private:
 	Variables m_def;
 	Variables m_in;
 	Variables m_out;
+
 	std::list<Instruction*> m_succ;
 	std::list<Instruction*> m_pred;
 
@@ -131,8 +112,6 @@ private:
 typedef std::list<Instruction*> Instructions;
 
 bool variableExists(Variable* variable, Variables variables);
-
-Instructions& getInstructions();
 
 std::ostream& operator<< (std::ostream& os, Instruction* instr);
 

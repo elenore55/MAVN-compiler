@@ -8,7 +8,9 @@ void FileWriter::writeToSFile(Instructions* instructions, Variables* variables, 
 	std::ofstream os;
 	os.open(m_path);
 	if (!os)
+	{
 		throw std::runtime_error("Could not opet output file.");
+	}
 	for (Functions::iterator it = functions.begin(); it != functions.end(); it++)
 	{
 		os << ".globl " << it->first << std::endl;
@@ -18,9 +20,9 @@ void FileWriter::writeToSFile(Instructions* instructions, Variables* variables, 
 	{
 		Variable* v = *it;
 		if (v->type() == Variable::MEM_VAR)
-			os << v->name() << ":\t" << v->value() << std::endl;
+			os << v->name() << ":\t.word " << v->value() << std::endl;
 	}
-	os << std::endl;
+	os << "\n.text\n";
 	int instrCount = 1;
 	for (Instructions::iterator it = instructions->begin(); it != instructions->end(); it++, instrCount++)
 	{
