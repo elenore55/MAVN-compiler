@@ -16,11 +16,14 @@ public:
 private:
 	TokenList m_tokenList;
 	Instructions* m_instructions;
+	Variables* m_variables;
 	std::map<std::string, Variable*> m_variablesMap;
 	Labels m_lablesMap;
 	Functions m_functionsMap;
 	std::map<int, Instruction*> m_instructionsMap;
 
+	void generateVariables();
 	void generateInstructions();
 	void determinePredAndSucc();
+	void validateLabels();
 };

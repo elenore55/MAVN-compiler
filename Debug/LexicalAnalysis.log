@@ -1,2 +1,4 @@
-﻿  main.cpp
+﻿  InstructionGenerator.cpp
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(288,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(305,21): warning C4018: '<': signed/unsigned mismatch
   LexicalAnalysis.vcxproj -> C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\Debug\LexicalAnalysis.exe

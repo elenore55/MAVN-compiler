@@ -1,6 +1,6 @@
 #include "InstructionGenerator.h"
 
-InstructionGenerator::InstructionGenerator(TokenList tokenList) : m_tokenList(tokenList), m_instructions(nullptr) {}
+InstructionGenerator::InstructionGenerator(TokenList tokenList) : m_tokenList(tokenList), m_instructions(nullptr), m_variables(nullptr) {}
 
 Instructions* InstructionGenerator::getInstructions()
 {
@@ -11,8 +11,26 @@ Instructions* InstructionGenerator::getInstructions()
 
 Variables* InstructionGenerator::getVariables()
 {
-	Variables* variables = new Variables();
+	if (m_variables == nullptr)
+		generateVariables();
+	return m_variables;
+}
+
+Labels InstructionGenerator::getLabels()
+{
+	return m_lablesMap;
+}
+
+Functions InstructionGenerator::getFunctions()
+{
+	return m_functionsMap;
+}
+
+void InstructionGenerator::generateVariables()
+{
+	m_variables = new Variables();
 	int varCount = -1;
+	int line = 1;
 	for (TokenList::iterator it = m_tokenList.begin(); it != m_tokenList.end(); it++)
 	{
 		switch (it->getType())
@@ -24,7 +42,7 @@ Variables* InstructionGenerator::getVariables()
 			v->name() = (++it)->getValue();
 			v->value() = stoi((++it)->getValue());
 			m_variablesMap[v->name()] = v;
-			variables->push_back(v);
+			m_variables->push_back(v);
 			break;
 		}
 		case T_REG:
@@ -34,24 +52,30 @@ Variables* InstructionGenerator::getVariables()
 			v->name() = (++it)->getValue();
 			m_variablesMap[v->name()] = v;
 			v->pos() = ++varCount;
-			variables->push_back(v);
+			m_variables->push_back(v);
+			break;
+		}
+		case T_R_ID:
+		{
+			if (m_variablesMap.find(it->getValue()) == m_variablesMap.end())
+				throw std::runtime_error("ERROR\nUndeclared register variable: " + it->getValue() + " on line " + std::to_string(line));
+			break;
+		}
+		case T_M_ID:
+		{
+			if (m_variablesMap.find(it->getValue()) == m_variablesMap.end())
+				throw std::runtime_error("ERROR\nUndeclared memory variable: " + it->getValue() + " on line " + std::to_string(line));
+			break;
+		}
+		case T_SEMI_COL:
+		{
+			line++;
 			break;
 		}
 		default:
 			break;
 		}
 	}
-	return variables;
-}
-
-Labels InstructionGenerator::getLabels()
-{
-	return m_lablesMap;
-}
-
-Functions InstructionGenerator::getFunctions()
-{
-	return m_functionsMap;
 }
 
 void InstructionGenerator::generateInstructions()
@@ -250,6 +274,7 @@ void InstructionGenerator::generateInstructions()
 			break;
 		}
 	}
+	validateLabels();
 	determinePredAndSucc();
 }
 
@@ -282,6 +307,34 @@ void InstructionGenerator::determinePredAndSucc()
 				instr->addSucc(m_instructionsMap[instr->pos() + 1]);
 				m_instructionsMap[instr->pos() + 1]->addPred(instr);
 			}
+		}
+	}
+}
+
+void InstructionGenerator::validateLabels()
+{
+	int line = 1;
+	for (TokenList::iterator it = m_tokenList.begin(); it != m_tokenList.end(); it++)
+	{
+		switch (it->getType())
+		{
+		case T_ID:
+		{
+			if (m_lablesMap.find(it->getValue()) == m_lablesMap.end() && m_functionsMap.find(it->getValue()) == m_functionsMap.end())
+				throw std::runtime_error("ERROR\nNon-existing label: " + it->getValue() + " on line " + std::to_string(line));
+		}
+		//case T_FUNC:
+		//{
+		//	if (m_functionsMap.find(it->getValue()) == m_functionsMap.end())
+		//		throw std::runtime_error("Non-existing function: " + it->getValue() + " on line " + std::to_string(line));
+		//}
+		case T_SEMI_COL:
+		{
+			line++;
+			break;
+		}
+		default:
+			break;
 		}
 	}
 }
