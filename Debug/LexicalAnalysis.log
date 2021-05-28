@@ -1,4 +1,17 @@
-﻿  InstructionGenerator.cpp
-C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(288,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(305,21): warning C4018: '<': signed/unsigned mismatch
+﻿  ConcreteGenerators.cpp
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\ConcreteGenerators.cpp(169,2): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\ConcreteGenerators.cpp(171,2): warning C4834: discarding return value of function with 'nodiscard' attribute
+  FileWriter.cpp
+  IR.cpp
+  InstructionGenerator.cpp
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(72,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\InstructionGenerator.cpp(89,21): warning C4018: '<': signed/unsigned mismatch
+  InterferenceGraph.cpp
+  LivelinessAnalysis.cpp
+  ResourceAllocation.cpp
+  Simplification.cpp
+  SyntaxAnalysis.cpp
+C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\SyntaxAnalysis.cpp(77,6): warning C4834: discarding return value of function with 'nodiscard' attribute
+  main.cpp
+  Generating Code...
   LexicalAnalysis.vcxproj -> C:\Users\Milica\Desktop\Fakultet\Druga godina\Ljetni semestar\Sistemska programska podrska 1\Projekat\src\Debug\LexicalAnalysis.exe

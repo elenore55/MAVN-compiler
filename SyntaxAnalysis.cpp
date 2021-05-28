@@ -1,6 +1,10 @@
 #include "SyntaxAnalysis.h"
+#include "ConcreteGenerators.h"
 
-SyntaxAnalysis::SyntaxAnalysis(LexicalAnalysis& lex) : lexicalAnalysis(lex), errorFound(false), tokenIterator(lexicalAnalysis.getTokenList().begin()) {}
+SyntaxAnalysis::SyntaxAnalysis(LexicalAnalysis& lex) : 
+	lexicalAnalysis(lex), errorFound(false), tokenIterator(lexicalAnalysis.getTokenList().begin()), 
+	m_instructionCount(1), m_lineCount(1), m_isFunction(false), m_variables(new Variables())
+{}
 
 bool SyntaxAnalysis::Do()
 {
@@ -12,9 +16,24 @@ bool SyntaxAnalysis::Do()
 	return !errorFound;	
 }
 
+Labels SyntaxAnalysis::getLabels()
+{
+	return m_lablesMap;
+}
+
+Functions SyntaxAnalysis::getFunctions()
+{
+	return m_functionsMap;
+}
+
+Variables* SyntaxAnalysis::getVariables()
+{
+	return m_variables;
+}
+
 void SyntaxAnalysis::printSyntaxError(Token token)
 {
-	std::cout << "Syntax error! Token: " << token.getValue() << " unexpected" << std::endl;
+	throw std::runtime_error("Syntax error! Token: " + token.getValue() + " unexpected");
 }
 
 void SyntaxAnalysis::eat(TokenType t)
@@ -22,8 +41,79 @@ void SyntaxAnalysis::eat(TokenType t)
 	if (!errorFound)
 	{
 		if (currentToken.getType() == t)
-		{
-			// std::cout << currentToken.getValue() << std::endl;
+		{	
+			switch (currentToken.getType())
+			{
+			case T_FUNC:
+				m_isFunction = true;
+				break;
+			case T_ID:
+				if (m_isFunction)
+				{
+					if (m_functionsMap.find(currentToken.getValue()) != m_functionsMap.end())
+					{
+						throw std::runtime_error("Function " + currentToken.getValue() + " already defined");
+					}
+					m_functionsMap[currentToken.getValue()] = m_instructionCount;
+					m_isFunction = false;
+				}
+				else
+				{
+					if (getNextToken().getType() != T_COL)
+					{
+						if (m_lablesMap.find(currentToken.getValue()) == m_lablesMap.end())
+						{
+							throw std::runtime_error("ERROR\nNon-existing label: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
+						}
+					}
+					else
+					{
+						if (m_lablesMap.find(currentToken.getValue()) != m_lablesMap.end())
+						{
+							throw std::runtime_error("Label " + currentToken.getValue() + " already defined");
+						}
+						m_lablesMap[currentToken.getValue()] = m_instructionCount;
+					}
+					*tokenIterator--;
+				}
+				break;
+			case T_MEM:
+			{
+				Variable* v = MEM().generate(tokenIterator);
+				m_variablesMap[v->name()] = v;
+				m_variables->push_back(v);
+				break;
+			}
+			case T_REG:
+			{
+				Variable* v = REG().generate(tokenIterator);
+				m_variablesMap[v->name()] = v;
+				v->pos() = ++m_varCount;
+				m_variables->push_back(v);
+				break;
+			}
+			case T_R_ID:
+			{
+				if (m_variablesMap.find(currentToken.getValue()) == m_variablesMap.end())
+					throw std::runtime_error("ERROR\nUndeclared register variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
+				break;
+			}
+			case T_M_ID:
+			{
+				if (m_variablesMap.find(currentToken.getValue()) == m_variablesMap.end())
+					throw std::runtime_error("ERROR\nUndeclared memory variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
+				break;
+			}
+			case T_ADD: case T_ADDI: case T_SUB: case T_LA: case T_LI: case T_LW: case T_SW: 
+			case T_BLTZ: case T_B: case T_NOP: case T_SEQ: case T_ABS: case T_NOR:
+				m_instructionCount++;
+				break;
+			case T_SEMI_COL:
+				m_lineCount++;
+				break;
+			default:
+				break;
+			}
 			if (t != T_END_OF_FILE)
 				currentToken = getNextToken();
 		}

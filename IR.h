@@ -56,12 +56,7 @@ public:
 	Instruction () : m_position(0), m_type(I_NO_TYPE) {}
 	Instruction (int pos, InstructionType type, Variables& dst, Variables& src) :
 		m_position(pos), m_type(type), m_dst(dst), m_src(src), m_def(dst), m_use(src) 
-	{
-		m_src.sort();
-		m_src.unique();
-		m_use.sort();
-		m_use.unique();
-	}
+	{}
 
 	InstructionType& type();
 	std::string& instructionString();
@@ -86,7 +81,7 @@ public:
 
 	void updateInstructionString();
 
-private:
+protected:
 	int m_position;
 	InstructionType m_type;
 	std::string m_instructionString;

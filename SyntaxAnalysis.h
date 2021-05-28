@@ -2,13 +2,16 @@
 
 #include "LexicalAnalysis.h"
 #include "Token.h"
+#include "IR.h"
 
 class SyntaxAnalysis 
 {
 public:
 	SyntaxAnalysis(LexicalAnalysis& lex);
 	bool Do();
-
+	Labels getLabels();
+	Functions getFunctions();
+	Variables* getVariables();
 private:
 	/**
 	* Prints the error message, and token that caused the syntax error
@@ -55,4 +58,13 @@ private:
 	* Current token that is being analyzed
 	*/
 	Token currentToken;
+
+	int m_instructionCount;
+	int m_lineCount;
+	Labels m_lablesMap;
+	Functions m_functionsMap;
+	bool m_isFunction;
+	Variables* m_variables;
+	int m_varCount = -1;
+	std::map<std::string, Variable*> m_variablesMap;
 };

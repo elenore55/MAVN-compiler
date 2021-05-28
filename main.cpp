@@ -48,8 +48,10 @@ int main()
 		/**
 		* Instruction Generation.
 		*/
-		InstructionGenerator gen(lex.getTokenList());
-		Variables* vars = gen.getVariables();
+		Labels labels = syntaxAnalysis.getLabels();
+		Functions functions = syntaxAnalysis.getFunctions();
+		Variables* vars = syntaxAnalysis.getVariables();
+		InstructionGenerator gen(lex.getTokenList(), labels, functions, vars);
 		Instructions* instructions = gen.getInstructions();
 		for (Instruction* ins : (*instructions))
 		{
@@ -95,8 +97,7 @@ int main()
 		/**
 		* Generating File.
 		*/
-		Labels labels = gen.getLabels();
-		Functions functions = gen.getFunctions();
+		
 		FileWriter writer(outFileName);
 		writer.writeToSFile(instructions, vars, labels, functions);
 

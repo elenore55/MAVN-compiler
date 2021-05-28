@@ -80,6 +80,7 @@
     <ClInclude Include="FileWriter.h" />
     <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="InstructionGenerator.h" />
+    <ClInclude Include="ConcreteGenerators.h" />
     <ClInclude Include="InterferenceGraph.h" />
     <ClInclude Include="IR.h" />
     <ClInclude Include="LexicalAnalysis.h" />
@@ -94,6 +95,7 @@
     <ClCompile Include="FileWriter.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="InstructionGenerator.cpp" />
+    <ClCompile Include="ConcreteGenerators.cpp" />
     <ClCompile Include="InterferenceGraph.cpp" />
     <ClCompile Include="IR.cpp" />
     <ClCompile Include="LexicalAnalysis.cpp" />
