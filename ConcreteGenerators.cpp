@@ -160,22 +160,3 @@ Instruction* NOP::generate(TokenList::iterator& it, std::map<std::string, Variab
 	instr->instructionString() = "nop;";
 	return instr;
 }
-
-Variable* MEM::generate(TokenList::iterator it)
-{
-	Variable* v = new Variable();
-	v->type() = Variable::MEM_VAR;
-	v->name() = it->getValue();
-	*it++;
-	v->value() = std::stoi(it->getValue());
-	*it--;
-	return v;
-}
-
-Variable* REG::generate(TokenList::iterator it)
-{
-	Variable* v = new Variable();
-	v->type() = Variable::REG_VAR;
-	v->name() = it->getValue();
-	return v;
-}

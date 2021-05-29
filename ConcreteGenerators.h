@@ -9,11 +9,6 @@ public:
 	virtual Instruction* generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount) = 0;
 };
 
-class VariableGeneratingFunc
-{
-	virtual Variable* generate(TokenList::iterator it) = 0;
-};
-
 class ADD : public InstrGeneratingFunc
 {
 public:
@@ -90,16 +85,4 @@ class NOP : public InstrGeneratingFunc
 {
 public:
 	Instruction* generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount) override;
-};
-
-class MEM : public VariableGeneratingFunc
-{
-public:
-	Variable* generate(TokenList::iterator it) override;
-};
-
-class REG : public VariableGeneratingFunc
-{
-public:
-	Variable* generate(TokenList::iterator it) override;
 };

@@ -67,4 +67,6 @@ private:
 	Variables* m_variables;
 	int m_varCount = -1;
 	std::map<std::string, Variable*> m_variablesMap;
+	bool m_variableForming;
+	Variable* m_currentVariable;
 };

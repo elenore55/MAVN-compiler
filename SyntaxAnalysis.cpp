@@ -3,7 +3,8 @@
 
 SyntaxAnalysis::SyntaxAnalysis(LexicalAnalysis& lex) : 
 	lexicalAnalysis(lex), errorFound(false), tokenIterator(lexicalAnalysis.getTokenList().begin()), 
-	m_instructionCount(1), m_lineCount(1), m_isFunction(false), m_variables(new Variables())
+	m_instructionCount(1), m_lineCount(1), m_isFunction(false), m_variables(new Variables()),
+	m_varCount(-1), m_variableForming(false), m_currentVariable(nullptr)
 {}
 
 bool SyntaxAnalysis::Do()
@@ -79,29 +80,61 @@ void SyntaxAnalysis::eat(TokenType t)
 				break;
 			case T_MEM:
 			{
-				Variable* v = MEM().generate(tokenIterator);
-				m_variablesMap[v->name()] = v;
-				m_variables->push_back(v);
+				m_variableForming = true;
+				m_currentVariable = new Variable();
+				m_currentVariable->type() = Variable::MEM_VAR;
 				break;
 			}
 			case T_REG:
 			{
-				Variable* v = REG().generate(tokenIterator);
-				m_variablesMap[v->name()] = v;
-				v->pos() = ++m_varCount;
-				m_variables->push_back(v);
+				m_variableForming = true;
+				m_currentVariable = new Variable();
+				m_currentVariable->type() = Variable::REG_VAR;
 				break;
 			}
 			case T_R_ID:
 			{
-				if (m_variablesMap.find(currentToken.getValue()) == m_variablesMap.end())
+				if (m_variableForming)
+				{
+					m_currentVariable->name() = currentToken.getValue();
+					m_currentVariable->pos() = ++m_varCount;
+					if (m_variablesMap.find(m_currentVariable->name()) != m_variablesMap.end())
+					{
+						throw std::runtime_error("ERROR\nRedeclared register variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
+					}
+					m_variables->push_back(m_currentVariable);
+					m_variablesMap[m_currentVariable->name()] = m_currentVariable;
+					m_variableForming = false;
+				}
+				else if (m_variablesMap.find(currentToken.getValue()) == m_variablesMap.end())
+				{
 					throw std::runtime_error("ERROR\nUndeclared register variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
+				}
 				break;
 			}
 			case T_M_ID:
 			{
-				if (m_variablesMap.find(currentToken.getValue()) == m_variablesMap.end())
+				if (m_variableForming)
+				{
+					m_currentVariable->name() = currentToken.getValue();
+					if (m_variablesMap.find(m_currentVariable->name()) != m_variablesMap.end())
+					{
+						throw std::runtime_error("ERROR\nRedeclared memory variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
+					}
+				}
+				else if (m_variablesMap.find(currentToken.getValue()) == m_variablesMap.end())
 					throw std::runtime_error("ERROR\nUndeclared memory variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
+				break;
+			}
+			case T_NUM:
+			{
+				if (m_variableForming)
+				{
+					m_currentVariable->value() = std::stoi(currentToken.getValue());
+					m_variables->push_back(m_currentVariable);
+					m_variablesMap[m_currentVariable->name()] = m_currentVariable;
+					m_variableForming = false;
+				}
 				break;
 			}
 			case T_ADD: case T_ADDI: case T_SUB: case T_LA: case T_LI: case T_LW: case T_SW: 
