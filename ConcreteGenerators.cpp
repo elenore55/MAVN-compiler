@@ -1,6 +1,6 @@
 #include "ConcreteGenerators.h"
 
-Instruction* ADD::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* ADD::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -15,7 +15,7 @@ Instruction* ADD::generate(TokenList::iterator& it, std::map<std::string, Variab
 	return instr;
 }
 
-Instruction* SUB::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* SUB::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -29,7 +29,7 @@ Instruction* SUB::generate(TokenList::iterator& it, std::map<std::string, Variab
 	return instr;
 }
 
-Instruction* NOR::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* NOR::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -43,7 +43,7 @@ Instruction* NOR::generate(TokenList::iterator& it, std::map<std::string, Variab
 	return instr;
 }
 
-Instruction* SEQ::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* SEQ::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -57,7 +57,7 @@ Instruction* SEQ::generate(TokenList::iterator& it, std::map<std::string, Variab
 	return instr;
 }
 
-Instruction* ADDI::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* ADDI::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -70,7 +70,7 @@ Instruction* ADDI::generate(TokenList::iterator& it, std::map<std::string, Varia
 	return instr;
 }
 
-Instruction* LA::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* LA::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -83,7 +83,7 @@ Instruction* LA::generate(TokenList::iterator& it, std::map<std::string, Variabl
 	return instr;
 }
 
-Instruction* LW::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* LW::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -98,7 +98,7 @@ Instruction* LW::generate(TokenList::iterator& it, std::map<std::string, Variabl
 	return instr;
 }
 
-Instruction* SW::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* SW::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string srcName1 = (++it)->getValue();
 	it++;
@@ -113,7 +113,7 @@ Instruction* SW::generate(TokenList::iterator& it, std::map<std::string, Variabl
 	return instr;
 }
 
-Instruction* ABS::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* ABS::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -125,7 +125,7 @@ Instruction* ABS::generate(TokenList::iterator& it, std::map<std::string, Variab
 	return instr;
 }
 
-Instruction* LI::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* LI::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string dstName = (++it)->getValue();
 	it++;
@@ -135,7 +135,7 @@ Instruction* LI::generate(TokenList::iterator& it, std::map<std::string, Variabl
 	return instr;
 }
 
-Instruction* BLTZ::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* BLTZ::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	std::string srcName = (++it)->getValue();
 	it++;
@@ -146,7 +146,7 @@ Instruction* BLTZ::generate(TokenList::iterator& it, std::map<std::string, Varia
 	return instr;
 }
 
-Instruction* B::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* B::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	Instruction* instr = new Instruction(++instrCount, I_B, Variables(), Variables());
 	instr->instructionString() = "b " + (++it)->getValue() + ";";
@@ -154,7 +154,7 @@ Instruction* B::generate(TokenList::iterator& it, std::map<std::string, Variable
 	return instr;
 }
 
-Instruction* NOP::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
+Instruction* NOP::generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	Instruction* instr = new Instruction(++instrCount, I_NOP, Variables(), Variables());
 	instr->instructionString() = "nop;";

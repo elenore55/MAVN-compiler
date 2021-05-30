@@ -42,6 +42,7 @@ void InstructionGenerator::generateInstructions()
 {
 	m_instructions = new Instructions();
 	int instrCount = 0;
+	int lineCount = 1;
 
 	for (TokenList::iterator it = m_tokenList.begin(); it != m_tokenList.end(); it++)
 	{
@@ -53,6 +54,18 @@ void InstructionGenerator::generateInstructions()
 			Instruction* instr = m_instructionsGenMap[it->getType()]->generate(it, m_variablesMap, instrCount);
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
+			break;
+		}
+		case T_ID:
+		{
+			if (m_lablesMap.find(it->getValue()) == m_lablesMap.end() && m_functionsMap.find(it->getValue()) == m_functionsMap.end())
+			{
+				throw std::runtime_error("ERROR\nNon-existing label: " + it->getValue() + " on line " + std::to_string(lineCount));
+			}
+		}
+		case T_SEMI_COL:
+		{
+			lineCount++;
 			break;
 		}
 		default:
@@ -69,10 +82,6 @@ void InstructionGenerator::determinePredAndSucc()
 		Instruction* instr = *it;
 		if (instr->type() == I_BLTZ)
 		{
-			if (m_lablesMap.find(instr->label()) == m_lablesMap.end())
-			{
-				throw std::runtime_error("ERROR\nNon-existing label: " + instr->label() + " on instruction " + std::to_string(instr->pos()));
-			}
 			if (instr->pos() < m_instructionsMap.size())
 			{
 				instr->addSucc(m_instructionsMap[instr->pos() + 1]);
@@ -84,10 +93,6 @@ void InstructionGenerator::determinePredAndSucc()
 		}
 		else if (instr->type() == I_B)
 		{
-			if (m_lablesMap.find(instr->label()) == m_lablesMap.end())
-			{
-				throw std::runtime_error("ERROR\nNon-existing label: " + instr->label() + " on instruction " + std::to_string(instr->pos()));
-			}
 			int succPos = m_lablesMap[instr->label()];
 			instr->addSucc(m_instructionsMap[succPos]);
 			m_instructionsMap[succPos]->addPred(instr);
