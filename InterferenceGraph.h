@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include "IR.h"
 
 /**
@@ -14,6 +15,13 @@ typedef struct
 	int size;				///< size of square matrix
 } InterferenceGraph;
 
+struct VariableNamesComparator
+{
+	bool operator()(const std::string& left, const std::string& right) const
+	{
+		return std::stoi(left.substr(1)) < std::stoi(right.substr(1));
+	}
+};
 
 /**
  * Use this function to make interference graph from instructions list.
@@ -35,3 +43,4 @@ void freeInterferenceGraph(InterferenceGraph* ig);
  */
 void printInterferenceGraph(InterferenceGraph* ig);
 
+void testInterferenceGraph(std::string filePath, InterferenceGraph* ig);

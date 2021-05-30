@@ -47,15 +47,6 @@ std::stack<Variable*>* doSimplification(InterferenceGraph* ig, int degree)
             }
         }
     }
-    //int i = 0;
-    //for (Variables::iterator it = igCopy->variables->begin(); it != igCopy->variables->end(); it++)
-    //{
-    //    if (find(used.begin(), used.end(), i) == used.end())
-    //    {
-    //        retval->push(*it);
-    //        i++;
-    //    }
-    //}
     return retval;
 }
 

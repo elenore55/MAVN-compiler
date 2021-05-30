@@ -100,15 +100,15 @@ Instruction* LW::generate(TokenList::iterator& it, std::map<std::string, Variabl
 
 Instruction* SW::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
-	std::string srcName = (++it)->getValue();
+	std::string srcName1 = (++it)->getValue();
 	it++;
 	std::string constant = (++it)->getValue();
 	it++;
-	std::string dstName = (++it)->getValue();
-	Variables dstVars = { variablesMap[dstName] };
-	Variables srcVars = { variablesMap[srcName] };
+	std::string srcName2 = (++it)->getValue();
+	Variables dstVars = {};
+	Variables srcVars = { variablesMap[srcName1], variablesMap[srcName2] };
 	Instruction* instr = new Instruction(++instrCount, I_SW, dstVars, srcVars);
-	std::string s = variablesMap[srcName]->type() == Variable::MEM_VAR ? srcName : "`d";
+	std::string s = variablesMap[srcName2]->type() == Variable::MEM_VAR ? srcName2 : "`s";
 	instr->instructionString() = "sw `s, " + constant + "(" + s + ");";
 	return instr;
 }
@@ -149,7 +149,7 @@ Instruction* BLTZ::generate(TokenList::iterator& it, std::map<std::string, Varia
 Instruction* B::generate(TokenList::iterator& it, std::map<std::string, Variable*>& variablesMap, int& instrCount)
 {
 	Instruction* instr = new Instruction(++instrCount, I_B, Variables(), Variables());
-	instr->instructionString() = "b, " + (++it)->getValue() + ";";
+	instr->instructionString() = "b " + (++it)->getValue() + ";";
 	instr->label() = it->getValue();
 	return instr;
 }

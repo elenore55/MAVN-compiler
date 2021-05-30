@@ -69,6 +69,10 @@ void InstructionGenerator::determinePredAndSucc()
 		Instruction* instr = *it;
 		if (instr->type() == I_BLTZ)
 		{
+			if (m_lablesMap.find(instr->label()) == m_lablesMap.end())
+			{
+				throw std::runtime_error("ERROR\nNon-existing label: " + instr->label() + " on instruction " + std::to_string(instr->pos()));
+			}
 			if (instr->pos() < m_instructionsMap.size())
 			{
 				instr->addSucc(m_instructionsMap[instr->pos() + 1]);
@@ -80,6 +84,10 @@ void InstructionGenerator::determinePredAndSucc()
 		}
 		else if (instr->type() == I_B)
 		{
+			if (m_lablesMap.find(instr->label()) == m_lablesMap.end())
+			{
+				throw std::runtime_error("ERROR\nNon-existing label: " + instr->label() + " on instruction " + std::to_string(instr->pos()));
+			}
 			int succPos = m_lablesMap[instr->label()];
 			instr->addSucc(m_instructionsMap[succPos]);
 			m_instructionsMap[succPos]->addPred(instr);

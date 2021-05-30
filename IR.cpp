@@ -105,20 +105,22 @@ std::ostream& operator<<(std::ostream& os, Variable* var)
 
 std::ostream& operator<<(std::ostream& os, Instruction* instr)
 {
-	//os << "TYPE: " << instr->m_type << "  POS: " << instr->m_position << "\n";
-	//os << "DST:\n";
-	//for (Variable* var : instr->m_dst)
-	//	os << var << "\n";
-	//os << "SRC:\n";
-	//for (Variable* var : instr->m_src)
-	//	os << var << "\n";
-	os << instr->m_instructionString << "\n";
+	os << "=======================================================\n";
+	os << "TYPE: " << instr->m_type << "  POS: " << instr->m_position << "\n";
+	os << "DST:\n";
+	for (Variable* var : instr->m_dst)
+		os << "\t" << var << "\n";
+	os << "SRC:\n";
+	for (Variable* var : instr->m_src)
+		os << "\t" << var << "\n";
+	os << "INSTRUCTION STRING: " << instr->m_instructionString << "\n";
 	os << "PRED:\n";
 	for (Instruction* i : instr->m_pred)
-		os << i->instructionString() << "\n";
+		os << "\t" << i->instructionString() << "\n";
 	os << "SUCC:\n";
 	for (Instruction* i : instr->m_succ)
-		os << i->instructionString() << "\n";
+		os << "\t" << i->instructionString() << "\n";
+	os << "=======================================================\n";
 	return os;
 }
 

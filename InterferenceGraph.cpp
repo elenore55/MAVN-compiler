@@ -3,7 +3,7 @@
 
 InterferenceGraph* doInterferenceGraph(Instructions* instructions)
 {
-	std::map<std::string, Variable*> var_map;
+	std::map<std::string, Variable*, VariableNamesComparator> var_map;
 	InterferenceGraph* ig = new InterferenceGraph();
 	ig->variables = new Variables();
 	for (Instructions::iterator it = instructions->begin(); it != instructions->end(); it++)
@@ -12,10 +12,15 @@ InterferenceGraph* doInterferenceGraph(Instructions* instructions)
 		{
 			var_map[v->name()] = v;
 		}
+		for (Variable* v : (*it)->use())
+		{
+			var_map[v->name()] = v;
+		}
 	}
-
-	for (std::map<std::string, Variable*>::iterator it = var_map.begin(); it != var_map.end(); it++)
+	int i = 0;
+	for (std::map<std::string, Variable*>::iterator it = var_map.begin(); it != var_map.end(); it++, i++)
 	{
+		it->second->pos() = i;
 		ig->variables->push_back(it->second);
 	}
 	int size = ig->variables->size();
@@ -73,5 +78,30 @@ void printInterferenceGraph(InterferenceGraph* ig)
 			std::cout << ig->values[i][j] << "   ";
 		}
 		std::cout << std::endl;
+	}
+}
+
+void testInterferenceGraph(std::string filePath, InterferenceGraph* ig)
+{
+	std::ifstream ifs;
+	ifs.open(filePath);
+	if (!ifs)
+	{
+		throw std::runtime_error("File " + filePath + " does not exist.");
+	}
+	int n, k;
+	ifs >> n;
+	std::vector<std::vector<int>> correctResult(n);
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			ifs >> k;
+			correctResult[i].push_back(k);
+		}
+	}
+	if (correctResult == ig->values)
+	{
+		throw std::runtime_error("Incorrect interference graph.");
 	}
 }

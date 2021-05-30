@@ -6,6 +6,7 @@
 #include <map>
 
 using Labels = std::map<std::string, int>;
+
 using Functions = std::map<std::string, int>;
 
 /**
@@ -81,7 +82,7 @@ public:
 
 	void updateInstructionString();
 
-protected:
+private:
 	int m_position;
 	InstructionType m_type;
 	std::string m_instructionString;

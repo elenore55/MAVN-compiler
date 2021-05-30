@@ -4,7 +4,7 @@
 ResourceAllocation::ResourceAllocation(std::stack<Variable*>* simplificationStack, InterferenceGraph* ig) 
 	: m_simplificationStack(simplificationStack), m_interferenceGraph(ig) {}
 
-bool ResourceAllocation::Do()
+void ResourceAllocation::Do()
 {
 	while (m_simplificationStack->size() > 0) 
 	{
@@ -31,11 +31,11 @@ bool ResourceAllocation::Do()
 		}
 		m_simplificationStack->pop();
 	}
-	return true;
 }
 
-bool ResourceAllocation::check()
+void ResourceAllocation::check()
 {
+	bool correct = true;
 	std::set<int> colors;
 	for (Variables::iterator it1 = m_interferenceGraph->variables->begin(); it1 != m_interferenceGraph->variables->end(); it1++) 
 	{
@@ -45,11 +45,13 @@ bool ResourceAllocation::check()
 			Variable* v = *it1;
 			Variable* u = *it2;
 			if (m_interferenceGraph->values[v->pos()][u->pos()] == 1 && v->assignment() == u->assignment()) 
-				return false;
+				correct = false;
 			colors.insert(v->assignment());
 			colors.insert(u->assignment());
 		}
 	}
-	if (colors.size() > __REG_NUMBER__) return false;
-	return true;
+	if (colors.size() > __REG_NUMBER__) 
+		correct =  false;
+	if (!correct)
+		throw std::runtime_error("Resource Allocation failed!");
 }

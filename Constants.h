@@ -33,7 +33,7 @@ const int __REMOVED__ = -1;
 /**
  * Number of regs in processor.
  */
-const int __REG_NUMBER__ = 5;
+const int __REG_NUMBER__ = 4;
 
 /**
  * Use these to print liveness analysis dump.

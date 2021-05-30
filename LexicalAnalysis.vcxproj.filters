@@ -112,5 +112,17 @@
     <None Include="..\examples\simple.s">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\examples\example1.mavn">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\examples\example1.s">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\examples\example2.mavn">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\examples\example2.s">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

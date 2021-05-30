@@ -60,14 +60,7 @@ void SyntaxAnalysis::eat(TokenType t)
 				}
 				else
 				{
-					if (getNextToken().getType() != T_COL)
-					{
-						if (m_lablesMap.find(currentToken.getValue()) == m_lablesMap.end())
-						{
-							throw std::runtime_error("ERROR\nNon-existing label: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
-						}
-					}
-					else
+					if (getNextToken().getType() == T_COL)
 					{
 						if (m_lablesMap.find(currentToken.getValue()) != m_lablesMap.end())
 						{

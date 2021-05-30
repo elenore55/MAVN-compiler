@@ -8,8 +8,8 @@ class ResourceAllocation
 {
 public:
 	ResourceAllocation(std::stack<Variable*>* simplificationStack, InterferenceGraph* ig);
-	bool Do();
-	bool check();
+	void Do();
+	void check();
 
 private:
 	std::stack<Variable*>* m_simplificationStack;
