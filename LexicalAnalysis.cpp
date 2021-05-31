@@ -1,4 +1,6 @@
-﻿#include <iostream>
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
+
+#include <iostream>
 #include <iomanip>
 #include <fstream>
 
@@ -16,7 +18,7 @@ void LexicalAnalysis::initialize()
 }
 
 
-bool LexicalAnalysis::Do()
+void LexicalAnalysis::Do()
 {
 	while (true)
 	{
@@ -26,10 +28,11 @@ bool LexicalAnalysis::Do()
 			case T_ERROR:
 				errorToken = token;
 				tokenList.push_back(token);
-				return false;
+				printLexError();
+				throw runtime_error("\nException! Lexical analysis failed!\n");
 			case T_END_OF_FILE:
 				tokenList.push_back(token);
-				return true;
+				return;
 			case T_WHITE_SPACE:
 				continue;
 			default:
@@ -40,12 +43,12 @@ bool LexicalAnalysis::Do()
 }
 
 
-bool LexicalAnalysis::readInputFile(string fileName)
+void LexicalAnalysis::readInputFile(string fileName)
 {
 	inputFile.open(fileName, ios_base::binary);
 
 	if (!inputFile)
-		return false;
+		throw std::runtime_error("\nException! Failed to open input file!\n");
 	
 	inputFile.seekg(0, inputFile.end);
 	int length = (int)inputFile.tellg();
@@ -54,7 +57,6 @@ bool LexicalAnalysis::readInputFile(string fileName)
 	if (length > 0)
 		inputFile.read(&programBuffer.front(), length);
 	inputFile.close();
-	return true;
 }
 
 

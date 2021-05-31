@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
+
 #ifndef __LEXICAL_ANALYSIS__
 #define __LEXICAL_ANALYSIS__
 
@@ -23,12 +25,12 @@ public:
 	/**
 	 * Method which performs lexical analysis
 	 */
-	bool Do();
+	void Do();
 
 	/**
 	 * Method for reading the input file
 	 */
-	bool readInputFile(std::string fileName);
+	void readInputFile(std::string fileName);
 
 	/**
 	 * Use this function to get next lexical token from program source code.

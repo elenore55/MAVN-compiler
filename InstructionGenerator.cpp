@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #include "InstructionGenerator.h"
 
@@ -89,7 +89,7 @@ void InstructionGenerator::determinePredAndSucc()
 		{
 			if (instr->pos() < m_instructionsMap.size())
 			{
-				// one successor is next instruction in code
+				// one successor is next instruction in program code
 				instr->addSucc(m_instructionsMap[instr->pos() + 1]);
 				m_instructionsMap[instr->pos() + 1]->addPred(instr);
 			}
@@ -109,7 +109,7 @@ void InstructionGenerator::determinePredAndSucc()
 		{
 			if (instr->pos() < m_instructionsMap.size())
 			{
-				// successor is next instruction in code
+				// successor is next instruction in program code
 				instr->addSucc(m_instructionsMap[instr->pos() + 1]);
 				m_instructionsMap[instr->pos() + 1]->addPred(instr);
 			}

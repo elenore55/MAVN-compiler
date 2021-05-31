@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 30.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #include <iostream>
 #include <exception>
@@ -19,57 +19,52 @@ int main()
 {
 	try
 	{
-		std::string fileName = ".\\..\\examples\\simple.mavn";
-		std::string outFileName = ".\\..\\examples\\simple.s";
+		std::string fileName = ".\\..\\examples\\multiply.mavn";
+		std::string outFileName = ".\\..\\examples\\multiply.s";
 		//std::string igFileName = ".\\..\\examples\\multiply_ig.txt";
 
-		/**
-		* Lexical Analysis.
-		*/
+		
+		// Lexical Analysis
+		
 		LexicalAnalysis lex;
-		if (!lex.readInputFile(fileName))
-			throw runtime_error("\nException! Failed to open input file!\n");
+		lex.readInputFile(fileName);
 		lex.initialize();
-		if (!lex.Do())
-		{
-			lex.printLexError();
-			throw runtime_error("\nException! Lexical analysis failed!\n");
-		}
+		lex.Do();
 		cout << "Lexical analysis finished successfully!" << endl;
 		lex.printTokens();
 
-		/**
-		* Syntax Analysis.
-		*/
+		
+		// Syntax Analysis
+		
 		SyntaxAnalysis syntaxAnalysis(lex);
-		if (!syntaxAnalysis.Do())
-		{
-			throw runtime_error("\nException! Syntax analysis failed!\n");
-		}
+		syntaxAnalysis.Do();
 		cout << "Syntax analysis finished successfully!" << endl;
 
-		/**
-		* Instruction Generation.
-		*/
+		
+		// Instruction Generation
+	
 		Labels labels = syntaxAnalysis.getLabels();
 		Functions functions = syntaxAnalysis.getFunctions();
 		Variables* vars = syntaxAnalysis.getVariables();
 		InstructionGenerator gen(lex.getTokenList(), labels, functions, vars);
 		Instructions* instructions = gen.getInstructions();
+		/*for (Instruction* ins : (*instructions))
+		{
+			std::cout << ins << endl;
+		}*/
+
+		
+		// Liveliness Analysis
+		
+		LivelinessAnalysis livelinessAnalysis(instructions);
+		livelinessAnalysis.Do();
 		for (Instruction* ins : (*instructions))
 		{
 			std::cout << ins << endl;
 		}
-
-		/**
-		* Liveliness Analysis.
-		*/
-		LivelinessAnalysis livelinessAnalysis(instructions);
-		livelinessAnalysis.Do();
-
-		/**
-		* Interference Graph.
-		*/
+		
+		// Interference Graph
+		
 		InterferenceGraph* ig;
 		ig = doInterferenceGraph(instructions);
 		//testInterferenceGraph(igFileName, ig);
@@ -77,24 +72,24 @@ int main()
 		std::cout << "Interference graph successfully formed\n\n";
 		printInterferenceGraph(ig);
 
-		/**
-		* Simplification Stack.
-		*/
+		
+		// Simplification Stack
+		 
 		stack<Variable*>* simplificationStack;
 		simplificationStack = doSimplification(ig, __REG_NUMBER__);
 		printSimplificationStack(simplificationStack);
 
-		/**
-		* Resource Analysis.
-		*/
+
+		// Resource Analysis
+
 		ResourceAllocation resourceAllocation(simplificationStack, ig);
 		resourceAllocation.Do();
 		resourceAllocation.check();
 		std::cout << "Resource Allocation successful!\n";
 		
-		/**
-		* Generating Out File.
-		*/
+		
+		// Generating Out File
+		
 		FileWriter writer(outFileName);
 		writer.writeToSFile(instructions, vars, labels, functions);
 

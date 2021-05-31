@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #ifndef __FINITE_STATE_MACHINE__
 #define __FINITE_STATE_MACHINE__

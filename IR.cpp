@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 27.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #include "IR.h"
 #include <algorithm>
@@ -59,14 +59,14 @@ void Instruction::updateInstructionString()
 	}
 	if (m_use.size() > 0)
 	{
-		// replace placeholder for first source variable
+		// replace placeholder for first source variable with assigned resource
 		std::string srcReg1 = "$t" + std::to_string((*(m_use.begin()))->assignment() - 1);
 		auto src1Pos = m_instructionString.find("`s");
 		m_instructionString.replace(src1Pos, 2, srcReg1);
 	}
 	if (m_use.size() == 2)
 	{
-		// replace placeholder for second source variable
+		// replace placeholder for second source variable with assigned resource
 		Variables::iterator it = m_use.begin();
 		it++;
 		std::string srcReg2 = "$t" + std::to_string((*it)->assignment() - 1);
@@ -124,6 +124,12 @@ std::ostream& operator<<(std::ostream& os, Instruction* instr)
 	os << "SUCC:\n";
 	for (Instruction* i : instr->m_succ)
 		os << "\t" << i->instructionString() << "\n";
+	os << "IN:\n";
+	for (Variable* var : instr->m_in)
+		os << "\t" << var << "\n";
+	os << "OUT:\n";
+	for (Variable* var : instr->m_out)
+		os << "\t" << var << "\n";
 	os << "=======================================================\n";
 	return os;
 }

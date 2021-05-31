@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #ifndef __IR__
 #define __IR__
@@ -7,8 +7,15 @@
 #include "Types.h"
 #include <map>
 
+
+/**
+ * This type represents collection of pairs (label, instruction position)
+ */
 using Labels = std::map<std::string, int>;
 
+/**
+ * This type represents collection of pairs (function, instruction position)
+ */
 using Functions = std::map<std::string, int>;
 
 /**
@@ -82,11 +89,15 @@ public:
 
 	/**
 	* Adds an instruction to the list of predecessors
+	* 
+	* @param instr - pointer to instruction to be added
 	*/
 	void addPred(Instruction* instr);
 
 	/**
 	* Adds an instruction to the list of successors
+	* 
+	* @param instr - pointer to instruction to be added
 	*/
 	void addSucc(Instruction* instr);
 

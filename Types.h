@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 25.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #ifndef __TYPES__
 #define __TYPES__

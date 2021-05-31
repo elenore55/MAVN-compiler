@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 30.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #pragma once
 
@@ -13,12 +13,12 @@ public:
 	InstructionGenerator(TokenList tokenList, Labels labels, Functions functions, Variables* variables);
 	
 	/**
-	* @ return a pointer to a list of instructions
+	* @return pointer to a list of instructions
 	*/
 	Instructions* getInstructions();
 
 	/**
-	* Deallocates memory allocated for instructions
+	* Frees resources allocated for instructions
 	*/
 	void freeInstructions();
 
@@ -52,13 +52,12 @@ private:
 	Functions m_functionsMap;
 
 	/**
-	* Map containing instruction positions as keys and instructios as values
+	* Map containing instruction positions as keys and instructions as values
 	*/
 	std::map<int, Instruction*> m_instructionsMap;
 
 	/**
-	* Map containing token types as keys and objects 
-	* for genereting concrete instructions as values
+	* Map containing token types as keys and objects for genereting concrete instructions as values
 	*/
 	std::map<TokenType, InstrGeneratingFunc*> m_instructionsGenMap;
 

@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 27.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #pragma once
 
@@ -12,6 +12,11 @@ public:
 
 	/**
 	* Writes assembly code to file 
+	* 
+	* @param instruction - pointer to list of all instructions
+	* @param variables - pointer to list of all variables
+	* @param labels - collection of labels
+	* @param functions - collection of functions
 	*/
 	void writeToSFile(Instructions* instructions, Variables* variables, Labels labels, Functions functions);
 private:

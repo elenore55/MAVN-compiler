@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #pragma once
 
@@ -11,9 +11,12 @@ class InstrGeneratingFunc
 public:
 
 	/**
-	* Virulal method for generating instruction from tokens
+	* Virtual method for generating an instruction from tokens
 	* 
-	* @ return pointer to generated instruction
+	* @param it - token iterator
+	* @param variablesMap - map containing pairs (name, variable)
+	* @param instrCount - instruction ordinal
+	* @return pointer to generated instruction
 	*/
 	virtual Instruction* generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount) = 0;
 };

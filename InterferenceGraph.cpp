@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 30.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #include "InterferenceGraph.h"
 #include <map>

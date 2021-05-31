@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #include "ConcreteGenerators.h"
 
@@ -85,8 +85,7 @@ Instruction* LA::generate(TokenList::iterator it, std::map<std::string, Variable
 	Variables dstVars = { variablesMap[dstName] };
 	Variables srcVars = { variablesMap[srcName] };
 	Instruction* instr = new Instruction(++instrCount, I_LA, dstVars, srcVars);
-	std::string s = variablesMap[srcName]->type() == Variable::MEM_VAR ? srcName : "`s";
-	instr->instructionString() = "la `d, " + s + ";";
+	instr->instructionString() = "la `d, " + srcName + ";";
 	return instr;
 }
 
@@ -101,8 +100,7 @@ Instruction* LW::generate(TokenList::iterator it, std::map<std::string, Variable
 	Variables dstVars = { variablesMap[dstName] };
 	Variables srcVars = { variablesMap[srcName] };
 	Instruction* instr = new Instruction(++instrCount, I_LW, dstVars, srcVars);
-	std::string s = variablesMap[srcName]->type() == Variable::MEM_VAR ? srcName : "`s";
-	instr->instructionString() = "lw `d, " + constant + "(" + s + ");";
+	instr->instructionString() = "lw `d, " + constant + "(`s);";
 	return instr;
 }
 
@@ -117,8 +115,7 @@ Instruction* SW::generate(TokenList::iterator it, std::map<std::string, Variable
 	Variables dstVars = {};
 	Variables srcVars = { variablesMap[srcName1], variablesMap[srcName2] };
 	Instruction* instr = new Instruction(++instrCount, I_SW, dstVars, srcVars);
-	std::string s = variablesMap[srcName2]->type() == Variable::MEM_VAR ? srcName2 : "`s";
-	instr->instructionString() = "sw `s, " + constant + "(" + s + ");";
+	instr->instructionString() = "sw `s, " + constant + "(`s);";
 	return instr;
 }
 

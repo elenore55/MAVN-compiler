@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 26.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #include "SyntaxAnalysis.h"
 #include "ConcreteGenerators.h"
@@ -9,13 +9,15 @@ SyntaxAnalysis::SyntaxAnalysis(LexicalAnalysis& lex) :
 	m_varCount(-1), m_variableForming(false), m_currentVariable(nullptr)
 {}
 
-bool SyntaxAnalysis::Do()
+void SyntaxAnalysis::Do()
 {
 	currentToken = getNextToken();
 
 	Q();
 
-	return !errorFound;	
+	if (errorFound)
+		throw std::runtime_error("\nException! Syntax analysis failed!\n");
+	//return !errorFound;	
 }
 
 Labels SyntaxAnalysis::getLabels()

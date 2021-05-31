@@ -1,4 +1,4 @@
-﻿/* Autor: Milica Popović Datum: 30.05.2021. */
+﻿/* Autor: Milica Popović Datum: 31.05.2021. */
 
 #pragma once
 
@@ -14,7 +14,7 @@ public:
 	/**
 	* Conducts syntax analysis
 	*/
-	bool Do();
+	void Do();
 
 	/**
 	* @return collection of labels
@@ -32,7 +32,7 @@ public:
 	Variables* getVariables();
 
 	/**
-	* Deallocates memory allocated for variables
+	* Frees resources allocated for variables
 	*/
 	void freeVariables();
 
