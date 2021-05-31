@@ -6,7 +6,7 @@
 #include "IR.h"
 
 /**
- * This structure represent interference graph.
+ * This structure represents interference graph
  */
 typedef struct
 {
@@ -15,6 +15,9 @@ typedef struct
 	int size;				///< size of square matrix
 } InterferenceGraph;
 
+/**
+* This structure represents comparator for inserting pairs (name, variable) into a map
+*/
 struct VariableNamesComparator
 {
 	bool operator()(const std::string& left, const std::string& right) const
@@ -43,4 +46,8 @@ void freeInterferenceGraph(InterferenceGraph* ig);
  */
 void printInterferenceGraph(InterferenceGraph* ig);
 
+/**
+* Tests correctness of generated interference graph by comparing it
+* to a known correct result that is stored in a file 
+*/
 void testInterferenceGraph(std::string filePath, InterferenceGraph* ig);

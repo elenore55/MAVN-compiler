@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 26.05.2021. */
+
 #include "FileWriter.h"
 #include <map>
 
@@ -13,9 +15,11 @@ void FileWriter::writeToSFile(Instructions* instructions, Variables* variables, 
 	}
 	for (Functions::iterator it = functions.begin(); it != functions.end(); it++)
 	{
-		os << ".globl " << it->first << std::endl;
+		os << ".globl " << it->first << std::endl;	// functions
 	}
 	os << "\n.data\n";
+
+	// variables
 	for (Variables::iterator it = variables->begin(); it != variables->end(); it++)
 	{
 		Variable* v = *it;
@@ -24,8 +28,12 @@ void FileWriter::writeToSFile(Instructions* instructions, Variables* variables, 
 	}
 	os << "\n.text\n";
 	int instrCount = 1;
+
+	// instructions
 	for (Instructions::iterator it = instructions->begin(); it != instructions->end(); it++, instrCount++)
 	{
+		// labels
+
 		for (Functions::iterator it = functions.begin(); it != functions.end(); it++)
 		{
 			if (it->second == instrCount)
@@ -40,6 +48,7 @@ void FileWriter::writeToSFile(Instructions* instructions, Variables* variables, 
 				os << it->first << ":\n";
 			}
 		}
+
 		Instruction* instr = *it;
 		instr->updateInstructionString();
 		os << "\t" << instr->instructionString() << std::endl;

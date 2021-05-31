@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+
 #include "InstructionGenerator.h"
 
 InstructionGenerator::InstructionGenerator(TokenList tokenList, Labels labels, Functions functions, Variables* variables) :
@@ -51,6 +53,7 @@ void InstructionGenerator::generateInstructions()
 		case T_ADD: case T_SUB: case T_ADDI: case T_NOR: case T_LA: case T_LW: case T_SW: 
 		case T_SEQ: case T_ABS: case T_LI: case T_BLTZ: case T_B: case T_NOP:
 		{
+			// generating a specific instruction
 			Instruction* instr = m_instructionsGenMap[it->getType()]->generate(it, m_variablesMap, instrCount);
 			m_instructions->push_back(instr);
 			m_instructionsMap[instrCount] = instr;
@@ -58,10 +61,12 @@ void InstructionGenerator::generateInstructions()
 		}
 		case T_ID:
 		{
+			// checking for usage of undefined labels
 			if (m_lablesMap.find(it->getValue()) == m_lablesMap.end() && m_functionsMap.find(it->getValue()) == m_functionsMap.end())
 			{
 				throw std::runtime_error("ERROR\nNon-existing label: " + it->getValue() + " on line " + std::to_string(lineCount));
 			}
+			break;
 		}
 		case T_SEMI_COL:
 		{
@@ -84,15 +89,18 @@ void InstructionGenerator::determinePredAndSucc()
 		{
 			if (instr->pos() < m_instructionsMap.size())
 			{
+				// one successor is next instruction in code
 				instr->addSucc(m_instructionsMap[instr->pos() + 1]);
 				m_instructionsMap[instr->pos() + 1]->addPred(instr);
 			}
+			// one successor is instruction denoted by the label
 			int succPos = m_lablesMap[instr->label()];
 			instr->addSucc(m_instructionsMap[succPos]);
 			m_instructionsMap[succPos]->addPred(instr);
 		}
 		else if (instr->type() == I_B)
 		{
+			// successor is instruction denoted by the label
 			int succPos = m_lablesMap[instr->label()];
 			instr->addSucc(m_instructionsMap[succPos]);
 			m_instructionsMap[succPos]->addPred(instr);
@@ -101,6 +109,7 @@ void InstructionGenerator::determinePredAndSucc()
 		{
 			if (instr->pos() < m_instructionsMap.size())
 			{
+				// successor is next instruction in code
 				instr->addSucc(m_instructionsMap[instr->pos() + 1]);
 				m_instructionsMap[instr->pos() + 1]->addPred(instr);
 			}

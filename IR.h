@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+
 #ifndef __IR__
 #define __IR__
 
@@ -59,28 +61,42 @@ public:
 		m_position(pos), m_type(type), m_dst(dst), m_src(src), m_def(dst), m_use(src) 
 	{}
 
+	/**
+	* Methods for accessing instruction attributes
+	*/
+
 	InstructionType& type();
 	std::string& instructionString();
 	std::string& label();
+	int& pos();
 
 	Variables& dst();
 	Variables& src();
-
 	Variables& use();
 	Variables& def();
 	Variables& in();
 	Variables& out();
+
 	std::list<Instruction*>& succ();
 	std::list<Instruction*>& pred();
 
+	/**
+	* Adds an instruction to the list of predecessors
+	*/
 	void addPred(Instruction* instr);
+
+	/**
+	* Adds an instruction to the list of successors
+	*/
 	void addSucc(Instruction* instr);
 
-	int& pos();
+	/**
+	* Replaces placeholders for destination and source variables in the
+	* instruction string with names of actual registers after resource allocation
+	*/
+	void updateInstructionString();
 
 	friend std::ostream& operator<< (std::ostream& os, Instruction* instr);
-
-	void updateInstructionString();
 
 private:
 	int m_position;
@@ -98,7 +114,6 @@ private:
 
 	std::list<Instruction*> m_succ;
 	std::list<Instruction*> m_pred;
-
 };
 
 
@@ -107,6 +122,9 @@ private:
  */
 typedef std::list<Instruction*> Instructions;
 
+/**
+* Checks if variable exists in a list of variables
+*/
 bool variableExists(Variable* variable, Variables variables);
 
 std::ostream& operator<< (std::ostream& os, Instruction* instr);

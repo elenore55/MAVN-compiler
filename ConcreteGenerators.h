@@ -1,13 +1,26 @@
+﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+
 #pragma once
 
 #include "IR.h"
 #include "LexicalAnalysis.h"
 
+
 class InstrGeneratingFunc
 {
 public:
+
+	/**
+	* Virulal method for generating instruction from tokens
+	* 
+	* @ return pointer to generated instruction
+	*/
 	virtual Instruction* generate(TokenList::iterator it, std::map<std::string, Variable*>& variablesMap, int& instrCount) = 0;
 };
+
+/**
+* Derived classes for generating concrete instructions
+*/
 
 class ADD : public InstrGeneratingFunc
 {

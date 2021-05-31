@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 30.05.2021. */
+
 #include <iostream>
 #include <exception>
 
@@ -17,9 +19,9 @@ int main()
 {
 	try
 	{
-		std::string fileName = ".\\..\\examples\\example1.mavn";
-		std::string outFileName = ".\\..\\examples\\example1.s";
-		//std::string igFileName = ".\\..\\examples\\example3_ig.txt";
+		std::string fileName = ".\\..\\examples\\multiply.mavn";
+		std::string outFileName = ".\\..\\examples\\multiply.s";
+		//std::string igFileName = ".\\..\\examples\\multiply_ig.txt";
 
 		/**
 		* Lexical Analysis.
@@ -95,9 +97,8 @@ int main()
 		std::cout << "Resource Allocation successful!\n";
 		
 		/**
-		* Generating File.
+		* Generating Out File.
 		*/
-		
 		FileWriter writer(outFileName);
 		writer.writeToSFile(instructions, vars, labels, functions);
 

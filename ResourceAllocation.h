@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+
 #pragma once
 
 #include <stack>
@@ -8,7 +10,15 @@ class ResourceAllocation
 {
 public:
 	ResourceAllocation(std::stack<Variable*>* simplificationStack, InterferenceGraph* ig);
+
+	/**
+	* Conducts resource allocation
+	*/
 	void Do();
+
+	/**
+	* Checks correctness of resource allocation
+	*/
 	void check();
 
 private:

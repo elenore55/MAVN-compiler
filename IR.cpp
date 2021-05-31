@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 27.05.2021. */
+
 #include "IR.h"
 #include <algorithm>
 
@@ -50,26 +52,28 @@ void Instruction::updateInstructionString()
 {
 	if (m_def.size() > 0)
 	{
+		// replace placeholder for destination variable
 		std::string destReg = "$t" + std::to_string((*(m_def.begin()))->assignment() - 1);
 		auto destPos = m_instructionString.find("`d");
 		m_instructionString.replace(destPos, 2, destReg);
 	}
 	if (m_use.size() > 0)
 	{
+		// replace placeholder for first source variable
 		std::string srcReg1 = "$t" + std::to_string((*(m_use.begin()))->assignment() - 1);
 		auto src1Pos = m_instructionString.find("`s");
 		m_instructionString.replace(src1Pos, 2, srcReg1);
 	}
 	if (m_use.size() == 2)
 	{
-		auto it = m_use.begin();
+		// replace placeholder for second source variable
+		Variables::iterator it = m_use.begin();
 		it++;
 		std::string srcReg2 = "$t" + std::to_string((*it)->assignment() - 1);
 		auto src2Pos = m_instructionString.rfind("`s");
 		m_instructionString.replace(src2Pos, 2, srcReg2);
 	}
 }
-
 
 InstructionType& Instruction::type()
 {
@@ -126,20 +130,7 @@ std::ostream& operator<<(std::ostream& os, Instruction* instr)
 
 bool variableExists(Variable* variable, Variables variables)
 {
-	bool ret = false;
-
-	Variables::iterator it;
-
-	for (it = variables.begin(); it != variables.end(); it++)
-	{
-		if (*it == variable)
-		{
-			ret = true;
-			break;
-		}
-	}
-
-	return ret;
+	return find(variables.begin(), variables.end(), variable) != variables.end();
 }
 
 int& Variable::pos()

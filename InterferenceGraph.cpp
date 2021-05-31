@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 30.05.2021. */
+
 #include "InterferenceGraph.h"
 #include <map>
 
@@ -18,6 +20,9 @@ InterferenceGraph* doInterferenceGraph(Instructions* instructions)
 		}
 	}
 	int i = 0;
+
+	// initializing interference graph
+
 	for (std::map<std::string, Variable*>::iterator it = var_map.begin(); it != var_map.end(); it++, i++)
 	{
 		it->second->pos() = i;
@@ -43,6 +48,8 @@ InterferenceGraph* doInterferenceGraph(Instructions* instructions)
 		Instruction* instr = *it;
 		Variables def = instr->def();
 		Variables out = instr->out();
+
+		// add interference between variables in def and variables in use
 		for (Variable* v : def) 
 		{
 			for (Variable* u : out)
@@ -89,7 +96,10 @@ void testInterferenceGraph(std::string filePath, InterferenceGraph* ig)
 	{
 		throw std::runtime_error("File " + filePath + " does not exist.");
 	}
-	int n, k;
+	int n;	// number of variables in the interference graph
+	int k;
+
+	// read correct interference graph
 	ifs >> n;
 	std::vector<std::vector<int>> correctResult(n);
 	for (int i = 0; i < n; i++)
@@ -100,7 +110,7 @@ void testInterferenceGraph(std::string filePath, InterferenceGraph* ig)
 			correctResult[i].push_back(k);
 		}
 	}
-	if (correctResult == ig->values)
+	if (correctResult != ig->values)
 	{
 		throw std::runtime_error("Incorrect interference graph.");
 	}

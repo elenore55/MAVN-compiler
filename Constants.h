@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 29.05.2021. */
+
 #ifndef __CONSTANTS__
 #define __CONSTANTS__
 
@@ -28,7 +30,10 @@ const int __INTERFERENCE__ = 1;
  */
 const int __EMPTY__ = 0;
 
-const int __REMOVED__ = -1;
+/**
+* Use this for removed node in interference graph
+*/
+const int __REMOVED__ = -1;	
 
 /**
  * Number of regs in processor.

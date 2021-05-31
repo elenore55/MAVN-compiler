@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 26.05.2021. */
+
 #include <sstream>
 
 #include "FiniteStateMachine.h"

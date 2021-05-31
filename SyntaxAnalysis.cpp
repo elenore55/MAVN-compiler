@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 26.05.2021. */
+
 #include "SyntaxAnalysis.h"
 #include "ConcreteGenerators.h"
 
@@ -11,7 +13,6 @@ bool SyntaxAnalysis::Do()
 {
 	currentToken = getNextToken();
 
-	//TO DO: Call function for the starting non-terminal symbol
 	Q();
 
 	return !errorFound;	
@@ -46,11 +47,13 @@ void SyntaxAnalysis::eat(TokenType t)
 			switch (currentToken.getType())
 			{
 			case T_FUNC:
+				// function is supposed to be detected
 				m_isFunction = true;
 				break;
 			case T_ID:
 				if (m_isFunction)
 				{
+					// save function
 					if (m_functionsMap.find(currentToken.getValue()) != m_functionsMap.end())
 					{
 						throw std::runtime_error("Function " + currentToken.getValue() + " already defined");
@@ -60,6 +63,7 @@ void SyntaxAnalysis::eat(TokenType t)
 				}
 				else
 				{
+					// save label
 					if (getNextToken().getType() == T_COL)
 					{
 						if (m_lablesMap.find(currentToken.getValue()) != m_lablesMap.end())
@@ -72,64 +76,73 @@ void SyntaxAnalysis::eat(TokenType t)
 				}
 				break;
 			case T_MEM:
-			{
+				// initialize formation of memory variable
 				m_variableForming = true;
 				m_currentVariable = new Variable();
 				m_currentVariable->type() = Variable::MEM_VAR;
 				break;
-			}
 			case T_REG:
-			{
+				// initialize formation of register variable
 				m_variableForming = true;
 				m_currentVariable = new Variable();
 				m_currentVariable->type() = Variable::REG_VAR;
 				break;
-			}
 			case T_R_ID:
-			{
 				if (m_variableForming)
 				{
+					// register variable name detected
 					m_currentVariable->name() = currentToken.getValue();
 					m_currentVariable->pos() = ++m_varCount;
+
+					// check if variable is redeclared
 					if (m_variablesMap.find(m_currentVariable->name()) != m_variablesMap.end())
 					{
 						throw std::runtime_error("ERROR\nRedeclared register variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
 					}
+
+					// finish variable formation
 					m_variables->push_back(m_currentVariable);
 					m_variablesMap[m_currentVariable->name()] = m_currentVariable;
 					m_variableForming = false;
 				}
+
+				// check if undeclared variable is used
 				else if (m_variablesMap.find(currentToken.getValue()) == m_variablesMap.end())
 				{
 					throw std::runtime_error("ERROR\nUndeclared register variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
 				}
 				break;
-			}
 			case T_M_ID:
-			{
 				if (m_variableForming)
 				{
+					// memory variable name detected
 					m_currentVariable->name() = currentToken.getValue();
+
+					// check if variable is redeclared
 					if (m_variablesMap.find(m_currentVariable->name()) != m_variablesMap.end())
 					{
 						throw std::runtime_error("ERROR\nRedeclared memory variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
 					}
 				}
+
+				// check if undeclared variable is used
 				else if (m_variablesMap.find(currentToken.getValue()) == m_variablesMap.end())
+				{
 					throw std::runtime_error("ERROR\nUndeclared memory variable: " + currentToken.getValue() + " on line " + std::to_string(m_lineCount));
+				}
 				break;
-			}
 			case T_NUM:
-			{
 				if (m_variableForming)
 				{
+					// memory variable value detected
 					m_currentVariable->value() = std::stoi(currentToken.getValue());
+
+					// finish variable formation
 					m_variables->push_back(m_currentVariable);
 					m_variablesMap[m_currentVariable->name()] = m_currentVariable;
 					m_variableForming = false;
 				}
 				break;
-			}
 			case T_ADD: case T_ADDI: case T_SUB: case T_LA: case T_LI: case T_LW: case T_SW: 
 			case T_BLTZ: case T_B: case T_NOP: case T_SEQ: case T_ABS: case T_NOR:
 				m_instructionCount++;

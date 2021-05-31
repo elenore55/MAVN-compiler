@@ -1,3 +1,5 @@
+﻿/* Autor: Milica Popović Datum: 25.05.2021. */
+
 #ifndef __TYPES__
 #define __TYPES__
 
@@ -84,8 +86,7 @@ enum Regs
 	t0,
 	t1,
 	t2,
-	t3,
-	t4
+	t3
 };
 
 #endif
