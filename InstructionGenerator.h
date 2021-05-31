@@ -17,6 +17,11 @@ public:
 	*/
 	Instructions* getInstructions();
 
+	/**
+	* Deallocates memory allocated for instructions
+	*/
+	void freeInstructions();
+
 	~InstructionGenerator();
 
 private:

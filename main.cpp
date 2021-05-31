@@ -19,8 +19,8 @@ int main()
 {
 	try
 	{
-		std::string fileName = ".\\..\\examples\\multiply.mavn";
-		std::string outFileName = ".\\..\\examples\\multiply.s";
+		std::string fileName = ".\\..\\examples\\simple.mavn";
+		std::string outFileName = ".\\..\\examples\\simple.s";
 		//std::string igFileName = ".\\..\\examples\\multiply_ig.txt";
 
 		/**
@@ -82,10 +82,6 @@ int main()
 		*/
 		stack<Variable*>* simplificationStack;
 		simplificationStack = doSimplification(ig, __REG_NUMBER__);
-		if (simplificationStack == NULL)
-		{
-			throw runtime_error("Spill detected!");
-		}
 		printSimplificationStack(simplificationStack);
 
 		/**
@@ -103,6 +99,8 @@ int main()
 		writer.writeToSFile(instructions, vars, labels, functions);
 
 		freeInterferenceGraph(ig);
+		syntaxAnalysis.freeVariables();
+		gen.freeInstructions();
 	}
 	catch (runtime_error e)
 	{

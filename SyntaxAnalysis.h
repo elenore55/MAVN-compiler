@@ -31,6 +31,11 @@ public:
 	*/
 	Variables* getVariables();
 
+	/**
+	* Deallocates memory allocated for variables
+	*/
+	void freeVariables();
+
 private:
 
 	/**

@@ -33,6 +33,15 @@ Variables* SyntaxAnalysis::getVariables()
 	return m_variables;
 }
 
+void SyntaxAnalysis::freeVariables()
+{
+	for (Variables::iterator it = m_variables->begin(); it != m_variables->end(); it++)
+	{
+		delete* it;
+	}
+	delete m_variables;
+}
+
 void SyntaxAnalysis::printSyntaxError(Token token)
 {
 	throw std::runtime_error("Syntax error! Token: " + token.getValue() + " unexpected");

@@ -117,3 +117,12 @@ void InstructionGenerator::determinePredAndSucc()
 	}
 }
 
+void InstructionGenerator::freeInstructions()
+{
+	for (Instructions::iterator it = m_instructions->begin(); it != m_instructions->end(); it++)
+	{
+		delete* it;
+	}
+	delete m_instructions;
+}
+

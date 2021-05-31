@@ -47,7 +47,9 @@ std::stack<Variable*>* doSimplification(InterferenceGraph* ig, int degree)
             }
         }
 
-        if (maxPos == -1) return NULL;  // unable to remove node - spill detected
+        // unable to remove node - spill detected
+        if (maxPos == -1)
+            throw std::runtime_error("Spill detected!");  
 
         usedVars.push_back(maxPos);
 
