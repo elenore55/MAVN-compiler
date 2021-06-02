@@ -1,0 +1,32 @@
+_mem m1 1;
+_mem m2 10;
+
+_reg r1;
+_reg r2;
+_reg r3;
+_reg r4;
+_reg r5;
+_reg r6;
+_reg r7;
+_reg r8;
+
+
+_func main;
+	li r1, 20;
+	la r2, 4(r1);
+	la r3, 10(r1);
+	seq r4, r1, r2;
+	nor r5, r3, r2;
+labela:
+	sub r6, r5, r4;
+	addi r7, r4, 10;
+	abs r8, r3;
+	bltz r8, labela
+	sw r5, 2(r3);
+	sw r7, 8(r8);
+	la r7, m1;
+	la r6, m2;
+	lw r1, 5(r6);
+	add r1, r1, r7;
+	sw r1, 0(r7);
+	nop;

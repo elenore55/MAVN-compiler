@@ -19,9 +19,9 @@ int main()
 {
 	try
 	{
-		std::string fileName = ".\\..\\examples\\multiply.mavn";
-		std::string outFileName = ".\\..\\examples\\multiply.s";
-		//std::string igFileName = ".\\..\\examples\\multiply_ig.txt";
+		std::string fileName = ".\\..\\examples\\example1.mavn";
+		std::string outFileName = ".\\..\\examples\\example1.s";
+		std::string igFileName = ".\\..\\examples\\example1_ig.txt";
 
 		
 		// Lexical Analysis
@@ -67,9 +67,9 @@ int main()
 		
 		InterferenceGraph* ig;
 		ig = doInterferenceGraph(instructions);
-		//testInterferenceGraph(igFileName, ig);
+		testInterferenceGraph(igFileName, ig);
 		ig->size = ig->variables->size();
-		std::cout << "Interference graph successfully formed\n\n";
+		std::cout << "Interference graph successfully formed!\n\n";
 		printInterferenceGraph(ig);
 
 		
@@ -92,6 +92,7 @@ int main()
 		
 		FileWriter writer(outFileName);
 		writer.writeToSFile(instructions, vars, labels, functions);
+		std::cout << "File generated!\n";
 
 		freeInterferenceGraph(ig);
 		syntaxAnalysis.freeVariables();

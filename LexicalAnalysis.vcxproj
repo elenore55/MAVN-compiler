@@ -113,6 +113,9 @@
     <None Include="..\examples\example2.s" />
     <None Include="..\examples\example3.mavn" />
     <None Include="..\examples\example3.s" />
+    <None Include="..\examples\example4.mavn" />
+    <None Include="..\examples\example4.s" />
+    <None Include="..\examples\example5.mavn" />
     <None Include="..\examples\multiply.mavn" />
     <None Include="..\examples\multiply.s" />
     <None Include="..\examples\simple.mavn" />
